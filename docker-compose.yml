@@ -1,0 +1,34 @@
+version: '3'
+services:
+    app:
+        build: .
+        environment:
+            NGINX_WEBROOT: /whatsapp/public
+            APP_ENV: prod
+            APP_SECRET: 43bbc63b841f0be246aa421919abd75c
+            DATABASE_URL: pgsql://whatsapp:whatsapp@db:5432/whatsapp
+
+    balancer:
+        image: dockercloud/haproxy:latest
+        ports:
+            - 8080:80
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        links:
+            - app
+        depends_on:
+            - app
+
+    db:
+        image: postgres:alpine
+        environment:
+            POSTGRES_USER: whatsapp
+            POSTGRES_PASSWORD: whatsapp
+            POSTGRES_DB: whatsapp
+        volumes:
+            - ./database:/var/lib/postgresql/data:rw
+
+    adminer:
+        image: adminer
+        ports:
+            - 9999:8080
