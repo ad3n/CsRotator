@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service class="KejawenLab\Bima\Request\RequestHandler" id="KejawenLab\Bima\Request\RequestHandler">
+            <argument type="service" id="validator" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="translator" />
+        </service>
+        <service class="KejawenLab\Bima\Pagination\Paginator" id="KejawenLab\Bima\Pagination\Paginator">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="knp_paginator" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+        <service class="KejawenLab\Bima\EventSubscriber\SearchSubscriber" id="KejawenLab\Bima\EventSubscriber\SearchSubscriber">
+            <argument type="service" id="annotation_reader" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+        <service class="KejawenLab\Bima\EventSubscriber\CsrfTokenSubscriber" id="KejawenLab\Bima\EventSubscriber\CsrfTokenSubscriber">
+            <argument type="service" id="security.csrf.token_manager" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+        <service class="KejawenLab\Bima\Twig\PaginatorExtension" id="KejawenLab\Bima\Twig\PaginatorExtension">
+            <argument type="service" id="request_stack" />
+            <tag name="twig.extension" />
+        </service>
+    </services>
+</container>
