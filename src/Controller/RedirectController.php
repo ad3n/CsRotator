@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RedirectController extends Controller
 {
     /**
-     * @Route("/{slug}")
+     * @Route("/promosi/{slug}")
      */
     public function contact(string $slug, CampaignContacRepository $campaignContacRepository)
     {

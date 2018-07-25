@@ -80,7 +80,6 @@ COPY public public/
 COPY src src/
 COPY templates templates/
 COPY translations translations/
-COPY fixtures fixtures/
 
 RUN composer dump-autoload --optimize --classmap-authoritative
 
