@@ -33,4 +33,3 @@ class RedirectController extends Controller
         ]);
     }
 }
-
