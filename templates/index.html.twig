@@ -1,10 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block haed %}
-    <meta http-equiv="refresh" content="2;url=https://api.whatsapp.com/send?phone={{ contact.whatsAppNumber }}&text={{ campaign.greetingMessage }}" />
+{% spaceless %}
+    <style>html, body { width:100%; height:80%; } html { display:table; } body {display:table-cell; vertical-align:middle; } .box.flex {display: flex; justify-content: center; align-items: center; } .box {padding: .5rem; height: 200px; border-radius: 4px; color: #84613D; } .box div {text-align: center;} .button-success {    color: white; border-radius: 4px; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); background: rgb(28, 184, 65); padding: 10px; text-decoration: none; margin-top: 20px; display: inline-block;} @keyframes  lds-eclipse {0% {-webkit-transform: rotate(0deg); transform: rotate(0deg); } 50% {-webkit-transform: rotate(180deg); transform: rotate(180deg); } 100% {-webkit-transform: rotate(360deg); transform: rotate(360deg); } } @-webkit-keyframes lds-eclipse {0% {-webkit-transform: rotate(0deg); transform: rotate(0deg); } 50% {-webkit-transform: rotate(180deg); transform: rotate(180deg); } 100% {-webkit-transform: rotate(360deg); transform: rotate(360deg); } } .lds-eclipse {position: relative; } .lds-eclipse div {position: absolute; -webkit-animation: lds-eclipse 1s linear infinite; animation: lds-eclipse 1s linear infinite; width: 160px; height: 160px; top: 20px; left: 20px; border-radius: 50%; box-shadow: 0 4px 0 0 #ffffff; -webkit-transform-origin: 80px 82px; transform-origin: 80px 82px; } .lds-eclipse {width: 200px !important; height: 200px !important; -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px); transform: translate(-100px, -100px) scale(1) translate(100px, 100px); }</style>
+{% endspaceless %}
+{% endblock %}
+
+{% block body %}
+{% spaceless %}
+    <div class="box flex">
+        <div class="lds-css ng-scope">
+            <div style="width:100%;height:100%; " class="lds-eclipse">
+                <h1 id="countdown" style="font-size: 140px;margin-top: 0px;padding-top: 20px; color: white;">4</h1>
+                <div></div>
+            </div> </div>
+    </div>
+    <p>
+        <b>Anda akan diarahkan ke Customer Service Kami dalam beberapa saat</b><br>
+    </p>
+{% endspaceless %}
 {% endblock %}
 
 {% block javascripts %}
+{% spaceless %}
     <!-- Facebook Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s)
@@ -19,7 +37,23 @@
         fbq('track', 'Lead');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-                   src="https://www.facebook.com/tr?id={{ campaign.facebookPixel }}&ev=PageView&noscript=1"
+                   src="https://www.facebook.com/tr?id={{ campaign.facebookPixel }}&ev=Lead&noscript=1"
         /></noscript>
     <!-- End Facebook Pixel Code -->
+    <script>
+        let target = 'https://api.whatsapp.com/send?phone={{ contact.whatsAppNumber }}&text={{ campaign.greetingMessage }}';
+        let countdown_number = 4;
+        (function wait() {
+            countdown_number--;
+            document.getElementById('countdown').innerHTML = countdown_number;
+            if(countdown_number > 0) {
+                setTimeout(function(){ wait() }, 777);
+            }
+            else {
+
+                window.location = target;
+            }
+        })();
+    </script>
+{% endspaceless %}
 {% endblock %}

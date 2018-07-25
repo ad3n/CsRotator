@@ -25,7 +25,7 @@ class RedirectController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $campaignContacRepository->updateContactUse($campaignContact);
+        $campaignContacRepository->visitCampaign($campaignContact);
 
         return $this->render('index.html.twig', [
             'campaign' => $campaignContact->getCampaign(),

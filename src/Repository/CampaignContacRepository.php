@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\CampaignContact;
+use App\Entity\CampaignContactVisit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -32,11 +33,15 @@ class CampaignContacRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function updateContactUse(CampaignContact $campaignContact)
+    public function visitCampaign(CampaignContact $campaignContact)
     {
         $campaignContact->count();
 
+        $campaignVisit = new CampaignContactVisit();
+        $campaignVisit->setCampaignContact($campaignContact);
+
         $this->_em->persist($campaignContact);
+        $this->_em->persist($campaignVisit);
         $this->_em->flush();
     }
 }

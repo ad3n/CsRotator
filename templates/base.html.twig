@@ -1,3 +1,4 @@
+{% spaceless %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,8 +6,9 @@
         <title>{% block title %}Clorismen Customer Service{% endblock %}</title>
         {% block haed %}{% endblock %}
     </head>
-    <body>
+    <body style="text-align: center;background-color: #49535a; color: white;  font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>
+{% endspaceless %}
