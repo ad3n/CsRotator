@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block haed %}
+    {% spaceless %}
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    {% endspaceless %}
+{% endblock %}
+
+{% block body %}
+    {% spaceless %}
+        <div class="form-container" >
+
+            <div style=" width : 100vw; height : 100vh; background : #075E54;" class="">
+
+                <div  style="padding : 1em; max-width : 500px;  max-height : 100vh; background : white; margin : auto;">
+                    <!-- contents -->
+                    <h2>Pesan Produk Clorismen</h2>
+                    <p style="margin-top : 50px;"></p>
+                    <label class="form-label" for="field">No CS</label>
+                    <div class="input-group">
+
+                        <input type="text" class="form-input input-lg" readonly="readonly" value="{{ contact.whatsAppNumber }}" />
+                        <button  class="btn btn-primary input-group-btn btn-lg btn-copy" data-clipboard-text="{{ contact.whatsAppNumber }}" style=" background: #ddd; color : grey; border: 1px solid #ddd;">Salin</button>
+                    </div>
+                    <br>
+                    <div>
+                        <label class="form-label" for="field">Pesan</label>
+                        <textarea class="form-input" rows="9" readonly="readonly">{{ campaign.greetingMessage }}</textarea>
+                    </div>
+                    <br>
+                    <a href="{{ path('contact', { slug: campaign.slug, whatsAppNumber: {{ contact.whatsAppNumber }} }) }}" class="btn btn-primary btn-lg wa-btn" style="width: 100%; border: none; background: #25D366; position : sticky;">Kirim Ke Whatshapp Clorismen</a>
+                    <div class="mb-10 mt-10"></div>
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block javascripts %}
+    {% spaceless %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '{{ campaign.facebookPixel }}');
+            fbq('track', 'AddToCart');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+                       src="https://www.facebook.com/tr?id={{ campaign.facebookPixel }}&ev=AddToCart&noscript=1"
+            /></noscript>
+        <!-- End Facebook Pixel Code -->
+        <script>
+            new Clipboard('.btn-copy');
+        </script>
+    {% endspaceless %}
+{% endblock %}

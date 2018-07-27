@@ -15,9 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class RedirectController extends Controller
 {
     /**
-     * @Route("/promosi/{slug}")
+     * @Route("/promosi/{slug}", name="lead")
      */
-    public function contact(string $slug, CampaignContacRepository $campaignContacRepository)
+    public function lead(string $slug, CampaignContacRepository $campaignContacRepository)
+    {
+        $campaignContact = $campaignContacRepository->findByCampaignSlug($slug);
+
+        if (!$campaignContact) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('whatsapp.html.twig', [
+            'campaign' => $campaignContact->getCampaign(),
+            'contact' => $campaignContact->getContact(),
+            'slug' => $slug,
+        ]);
+    }
+
+    /**
+     * @Route("/contact/{slug}/{whatsAppNumber}", name="contact")
+     */
+    public function contact(string $slug, string $whatsAppNumber, CampaignContacRepository $campaignContacRepository)
     {
         $campaignContact = $campaignContacRepository->findByCampaignSlug($slug);
 
@@ -29,7 +47,7 @@ class RedirectController extends Controller
 
         return $this->render('index.html.twig', [
             'campaign' => $campaignContact->getCampaign(),
-            'contact' => $campaignContact->getContact(),
+            'whatsAppNumber' => $whatsAppNumber,
         ]);
     }
 }
