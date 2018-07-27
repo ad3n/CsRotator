@@ -28,7 +28,7 @@
                         <textarea class="form-input" rows="9" readonly="readonly">{{ campaign.greetingMessage }}</textarea>
                     </div>
                     <br>
-                    <a href="{{ path('contact', { slug: campaign.slug, whatsAppNumber: {{ contact.whatsAppNumber }} }) }}" class="btn btn-primary btn-lg wa-btn" style="width: 100%; border: none; background: #25D366; position : sticky;">Kirim Ke Whatshapp Clorismen</a>
+                    <a href="{{ path('contact', { slug: campaign.slug, whatsAppNumber: contact.whatsAppNumber }) }}" class="btn btn-primary btn-lg wa-btn" style="width: 100%; border: none; background: #25D366; position : sticky;">Kirim Ke Whatshapp Clorismen</a>
                     <div class="mb-10 mt-10"></div>
                 </div>
             </div>
