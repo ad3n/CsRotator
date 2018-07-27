@@ -33,6 +33,20 @@ class CampaignContacRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    public function findByCampaignSlugAndWhatsAppNumber(string $slug, string $whatsAppNumber): ? CampaignContact
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder->join('o.campaign', 'c');
+        $queryBuilder->join('o.contact', 'ct');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('c.slug', $queryBuilder->expr()->literal($slug)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('ct.whatsAppNumber', $queryBuilder->expr()->literal($whatsAppNumber)));
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+
+        return $query->getOneOrNullResult();
+    }
+
     public function visitCampaign(CampaignContact $campaignContact)
     {
         $campaignContact->count();
