@@ -10,7 +10,7 @@
     {% spaceless %}
         <div class="form-container" >
             <div style=" width : 100vw; height : 100vh; background : #075E54;" class="">
-                <div  style="padding : 1em; max-width : 750px;  max-height : 100vh; background : white; margin : auto;">
+                <div  style="padding : 1em; max-width : 850px;  max-height : 100vh; background : white; margin : auto;">
                     <!-- contents -->
                     <h2 style="text-align: center; color: #5b657a !important;">Pesan Produk Clorismen</h2>
                     <p style="margin-top : 50px;"></p>
@@ -23,10 +23,10 @@
                     <br>
                     <div>
                         <label class="form-label" for="field">Pesan</label>
-                        <textarea class="form-input" rows="9" readonly="readonly">{{ campaign.greetingMessage }}</textarea>
+                        <textarea class="form-input" rows="11" readonly="readonly">{{ campaign.greetingMessage }}</textarea>
                     </div>
                     <br>
-                    <a href="{{ path('contact', { slug: campaign.slug, whatsAppNumber: contact.whatsAppNumber }) }}" class="btn btn-primary btn-lg wa-btn" style="width: 100%; border: none; background: #25D366; position : sticky;">Kirim Ke Whatshapp Clorismen</a>
+                    <a href="{{ path('contact', { slug: campaign.slug, whatsAppNumber: contact.whatsAppNumber }) }}" class="btn btn-primary btn-lg wa-btn" style="width: 100%; border: none; background: #25D366; position : sticky;">Kirim Ke WhatsApp</a>
                     <div class="mb-10 mt-10"></div>
                 </div>
             </div>
