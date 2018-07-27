@@ -37,7 +37,7 @@ class RedirectController extends Controller
      */
     public function contact(string $slug, string $whatsAppNumber, CampaignContacRepository $campaignContacRepository)
     {
-        $campaignContact = $campaignContacRepository->findByCampaignSlug($slug);
+        $campaignContact = $campaignContacRepository->findByCampaignSlugAndWhatsAppNumber($slug, $whatsAppNumber);
 
         if (!$campaignContact) {
             throw new NotFoundHttpException();
@@ -48,6 +48,25 @@ class RedirectController extends Controller
         return $this->render('index.html.twig', [
             'campaign' => $campaignContact->getCampaign(),
             'whatsAppNumber' => $whatsAppNumber,
+        ]);
+    }
+
+    /**
+     * @Route("/chat/{slug}", name="chat")
+     */
+    public function chat(string $slug, CampaignContacRepository $campaignContacRepository)
+    {
+        $campaignContact = $campaignContacRepository->findByCampaignSlug($slug);
+
+        if (!$campaignContact) {
+            throw new NotFoundHttpException();
+        }
+
+        $campaignContacRepository->visitCampaign($campaignContact);
+
+        return $this->render('chat.html.twig', [
+            'campaign' => $campaignContact->getCampaign(),
+            'contact' => $campaignContact->getContact(),
         ]);
     }
 }
