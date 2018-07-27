@@ -33,7 +33,7 @@ class RedirectController extends Controller
     }
 
     /**
-     * @Route("/contact/{slug}/{whatsAppNumber}", name="contact")
+     * @Route("/kontak/{slug}/{whatsAppNumber}", name="contact")
      */
     public function contact(string $slug, string $whatsAppNumber, CampaignContacRepository $campaignContacRepository)
     {
