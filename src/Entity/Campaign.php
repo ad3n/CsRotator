@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PHLAK\Twine\Str;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -84,8 +85,8 @@ class Campaign
 
     public function setName(string $name): void
     {
-        $this->slug = strtolower(str_replace(' ', '-', $name));
-        $this->name = $name;
+        $this->name = Str::make($name)->uppercase();
+        $this->slug = $this->name->replace(' ', '-')->lowercase();
     }
 
     public function getSlug(): ? string

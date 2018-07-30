@@ -104,6 +104,9 @@
     "paragonie/random_compat": {
         "version": "v2.0.17"
     },
+    "phlak/twine": {
+        "version": "2.2.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

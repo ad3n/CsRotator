@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PHLAK\Twine\Str;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="contacts", indexes={@ORM\Index(name="contact_search_idx", columns={"name", "whats_app_number"})})
  * @ORM\Entity(repositoryClass="App\Repository\ContacRepository")
+ *
+ * @UniqueEntity("name")
  *
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
  */
@@ -69,7 +73,7 @@ class Contact
 
     public function setName(string $name): void
     {
-        $this->name = $name;
+        $this->name = Str::make($name)->uppercase();
     }
 
     public function getWhatsAppNumber(): ? string

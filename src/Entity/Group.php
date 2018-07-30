@@ -10,14 +10,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="clients", indexes={@ORM\Index(name="client_search_idx", columns={"name"})})
- * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ * @ORM\Table(name="groups", indexes={@ORM\Index(name="group_search_idx", columns={"name"})})
+ * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  *
  * @UniqueEntity("name")
  *
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
  */
-class Client
+class Group
 {
     /**
      * @ORM\Id()
