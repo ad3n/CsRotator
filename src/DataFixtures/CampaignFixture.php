@@ -16,15 +16,24 @@ class CampaignFixture extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $campaign = new Campaign();
-        $campaign->setClient($this->getReference('client'));
-        $campaign->setName('Beli Sabun Cloris');
-        $campaign->setFacebookPixel('199316867302387');
-        $campaign->setGreetingMessage('Halo gan, mau tanya produk cloris soapnya');
+        $campaign1 = new Campaign();
+        $campaign1->setClient($this->getReference('client'));
+        $campaign1->setName('Beli Sabun Cloris');
+        $campaign1->setFacebookPixel('199316867302387');
+        $campaign1->setGreetingMessage('Halo gan, mau tanya produk cloris soapnya');
 
-        $this->addReference('campaign', $campaign);
+        $this->addReference('campaign1', $campaign1);
+        $manager->persist($campaign1);
 
-        $manager->persist($campaign);
+        $campaign2 = new Campaign();
+        $campaign2->setClient($this->getReference('client'));
+        $campaign2->setName('Beli Sabun Cloris Form');
+        $campaign2->setFacebookPixel('199316867302387');
+        $campaign2->setGreetingMessage('Halo gan, mau tanya produk cloris soapnya');
+
+        $this->addReference('campaign2', $campaign2);
+        $manager->persist($campaign2);
+
         $manager->flush();
     }
 
