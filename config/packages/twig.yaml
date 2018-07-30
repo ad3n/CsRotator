@@ -2,3 +2,6 @@ twig:
     paths: ['%kernel.project_dir%/templates']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        title: 'CUSTOMER SERVICES ROTATOR'
+        title_long: 'CUSTOMER SERVICES ROTATOR'

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Repository\CampaignContacRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

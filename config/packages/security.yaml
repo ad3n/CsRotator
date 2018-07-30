@@ -12,7 +12,7 @@ security:
 
     firewalls:
         main:
-            pattern: ^/
+            pattern: ^/admin
             form_login:
                 provider: whatsapp
                 check_path: login_check
@@ -33,6 +33,6 @@ security:
             security: false
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_USER }
-        - { path: ^/, role: ROLE_USER }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

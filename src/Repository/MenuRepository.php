@@ -17,4 +17,14 @@ class MenuRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Menu::class);
     }
+
+    public function findAll()
+    {
+        return $this->findBy(['deletedAt' => null], ['parent' => 'ASC']);
+    }
+
+    public function findByCode(string $code): ? Menu
+    {
+        return $this->findOneBy(['code' => StringUtil::uppercase($code), 'deletedAt' => null]);
+    }
 }
