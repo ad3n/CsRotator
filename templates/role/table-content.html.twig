@@ -1,0 +1,27 @@
+{% spaceless %}
+
+{% set startNumber = start_page_number() %}
+
+{% for key, data in roles %}
+    <tr>
+        <td>{{ (key + startNumber)  }}</td>
+        {% if actions %}<td>{{ data.group.code ~ ' - ' ~ data.group.name }}</td>{% endif %}
+        <td>{% if data.menu.parent is not null %}{{ data.menu.parent.name ~ ' > ' ~ data.menu.name }}{% else %}{{ data.menu.name }}{% endif %}</td>
+        <td>
+            {% if actions %}{{ data.addable }}{% else %}<input type="checkbox" data-role-id="{{ data.id }}" class="role_addable" {% if data.addable %}checked="checked"{% endif %} name="addable"/>{% endif %}
+        </td>
+        <td>
+            {% if actions %}{{ data.editable }}{% else %}<input type="checkbox" data-role-id="{{ data.id }}" class="role_editable" {% if data.editable %}checked="checked"{% endif %} name="editable"/>{% endif %}
+        </td>
+        <td>
+            {% if actions %}{{ data.viewable }}{% else %}<input type="checkbox" data-role-id="{{ data.id }}" class="role_viewable" {% if data.viewable %}checked="checked"{% endif %} name="viewable"/>{% endif %}
+        </td>
+        <td>
+            {% if actions %}{{ data.deletable }}{% else %}<input type="checkbox" data-role-id="{{ data.id }}" class="role_deletable" {% if data.deletable %}checked="checked"{% endif %} name="deletable"/>{% endif %}
+        </td>
+        {% if actions %}
+            <td><button data-primary="{{ data.id }}" class="btn btn-primary edit margin-r-5"><i class="fa fa-edit"></i></button> <button data-primary="{{ data.id }}" class="btn btn-warning delete"><i class="fa fa-remove"></i></button></td>
+        {% endif %}
+    </tr>
+{% endfor %}
+{% endspaceless %}

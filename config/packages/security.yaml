@@ -5,7 +5,7 @@ security:
 
     providers:
         whatsapp:
-            id: App\Security\UserProvider
+            id: App\Security\User\UserProvider
 
     role_hierarchy:
         ROLE_USER: ROLE_USER

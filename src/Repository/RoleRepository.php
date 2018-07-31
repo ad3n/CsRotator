@@ -58,6 +58,16 @@ class RoleRepository extends ServiceEntityRepository
         return $this->filterMenu($query->getResult());
     }
 
+    public function persist(Role $role)
+    {
+        $this->_em->persist($role);
+    }
+
+    public function commit()
+    {
+        $this->_em->flush();
+    }
+
     private function filterMenu(array $roles): array
     {
         $menus = [];

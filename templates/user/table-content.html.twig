@@ -1,0 +1,24 @@
+{% spaceless %}
+
+{% set menu = code_to_menu('USER') %}
+
+{% set startNumber = start_page_number() %}
+
+{% for key, data in users %}
+    <tr>
+        <td>{{ (key + startNumber)  }}</td>
+        <td>{{ data.fullName }}</td>
+        <td>{{ data.username }}</td>
+        <td>{{ data.group.code ~ ' - ' ~ data.group.name }}</td>
+        <td>{{ data.organization.code ~ ' - ' ~ data.organization.name }}</td>
+        <td>
+            {% if is_granted('edit', menu) %}
+                <button data-primary="{{ data.id }}" class="btn btn-primary edit margin-r-5"><i class="fa fa-edit"></i></button>
+            {% endif %}
+            {% if is_granted('delete', menu and 'admin' != data.username) %}
+                <button data-primary="{{ data.id }}" class="btn btn-warning delete"><i class="fa fa-remove"></i></button>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+{% endspaceless %}
