@@ -114,7 +114,7 @@
 
         $(document).on('click', '.form-modal-action', function () {
             $('.form-title').html('Tambah User Baru');
-            $('.form-modal').modal();
+            $('#form-modal').modal();
         });
 
         $(document).on('click', '.save', function () {
@@ -141,7 +141,7 @@
                     $('#plainPassword').val('');
                     $('#group').val('');
 
-                    $('.form-modal').modal('hide');
+                    $('#form-modal').modal('hide');
 
                     toastr['success']('Data berhasil disimpan.');
 
@@ -174,7 +174,7 @@
                 $('.select2-static').trigger('change');
 
                 $('.form-title').html('Edit User');
-                $('.form-modal').modal();
+                $('#form-modal').modal();
             });
         });
 

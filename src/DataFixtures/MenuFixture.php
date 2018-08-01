@@ -54,6 +54,25 @@ class MenuFixture extends Fixture
         $manager->persist($menu4);
         $this->addReference('menu4', $menu4);
 
+        $menu5 = new Menu();
+        $menu5->setCode('MASTER');
+        $menu5->setName('Master');
+        $menu5->setIconClass('database');
+        $menu5->setMenuOrder(2);
+
+        $manager->persist($menu5);
+        $this->addReference('menu5', $menu5);
+
+        $menu6 = new Menu();
+        $menu6->setParent($menu5);
+        $menu6->setCode('KLIEN');
+        $menu6->setName('Klien');
+        $menu6->setMenuOrder(1);
+        $menu6->setRouteName('clients_index');
+
+        $manager->persist($menu6);
+        $this->addReference('menu6', $menu6);
+
         $manager->flush();
     }
 }

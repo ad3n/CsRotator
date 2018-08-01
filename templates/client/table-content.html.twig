@@ -1,6 +1,6 @@
 {% spaceless %}
 
-{% set menu = code_to_menu('CLIENT') %}
+{% set menu = code_to_menu('KLIEN') %}
 
 {% set startNumber = start_page_number() %}
 
@@ -9,9 +9,6 @@
         <td>{{ (key + startNumber)  }}</td>
         <td>{{ data.name }}</td>
         <td>
-            {% if is_granted('edit', menu) %}
-                <button data-toggle="modal" data-target="#role-modal" data-primary="{{ data.id }}" class="btn btn-danger role margin-r-5"><i class="fa fa-lock"></i></button>
-            {% endif %}
             {% if is_granted('edit', menu) %}
                 <button data-toggle="modal" data-target="#form-modal" data-primary="{{ data.id }}" class="btn btn-primary edit margin-r-5"><i class="fa fa-edit"></i></button>
             {% endif %}

@@ -29,7 +29,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Group</th>
+                            <th>Nama</th>
                             <th>Pilihan</th>
                         </tr>
                     </thead>
@@ -127,7 +127,7 @@
 
         $(document).on('click', '.form-modal-action', function () {
             $('.form-title').html('Tambah Group Baru');
-            $('.form-modal').modal();
+            $('#form-modal').modal();
         });
 
         $(document).on('click', '.save', function () {
@@ -148,7 +148,7 @@
                     $('#code').val('');
                     $('#name').val('');
 
-                    $('.form-modal').modal('hide');
+                    $('#form-modal').modal('hide');
 
                     toastr['success']('Data berhasil disimpan.');
 
