@@ -12,6 +12,11 @@ namespace App\Security\Permission;
  */
 class Permission
 {
+    const ADD = 'add';
+    const EDIT = 'edit';
+    const VIEW = 'view';
+    const DELETE = 'delete';
+
     private $menu;
 
     private $actions = [];

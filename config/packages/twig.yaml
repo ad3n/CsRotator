@@ -3,5 +3,6 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
+        version: '1.0'
         title: 'CUSTOMER SERVICES ROTATOR'
         title_long: 'CUSTOMER SERVICES ROTATOR'

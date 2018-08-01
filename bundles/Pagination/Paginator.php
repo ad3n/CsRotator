@@ -35,7 +35,7 @@ class Paginator
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function paginate(string $entityClass, int $limit, int $page = 1, $orderBy = NULL)
+    public function paginate(string $entityClass, int $limit, int $page = 1, $orderBy = null)
     {
         /** @var EntityRepository $repository */
         $repository = $this->doctrine->getRepository($entityClass);
@@ -48,9 +48,7 @@ class Paginator
 
         $this->eventDispatcher->dispatch(BimaAdminEvents::PAGINATION_EVENT, $event);
 
-        if($orderBy === NULL) {
-            $queryBuilder->addOrderBy('o.createdAt', 'DESC');
-        } else {
+        if($orderBy !== null) {
             if(is_array($orderBy['order_by'])) {
                 $order_by = $orderBy['order_by'];
                 $order_type = $orderBy['order_type'];

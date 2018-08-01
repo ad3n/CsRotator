@@ -29,6 +29,7 @@ class MenuFixture extends Fixture
         $menu2->setCode('MENU');
         $menu2->setName('Menu');
         $menu2->setMenuOrder(1);
+        $menu2->setRouteName('menus_index');
 
         $manager->persist($menu2);
         $this->addReference('menu2', $menu2);
@@ -38,9 +39,20 @@ class MenuFixture extends Fixture
         $menu3->setCode('GROUP');
         $menu3->setName('Group');
         $menu3->setMenuOrder(2);
+        $menu3->setRouteName('groups_index');
 
         $manager->persist($menu3);
         $this->addReference('menu3', $menu3);
+
+        $menu4 = new Menu();
+        $menu4->setParent($menu1);
+        $menu4->setCode('USER');
+        $menu4->setName('User');
+        $menu4->setMenuOrder(3);
+        $menu4->setRouteName('users_index');
+
+        $manager->persist($menu4);
+        $this->addReference('menu4', $menu4);
 
         $manager->flush();
     }

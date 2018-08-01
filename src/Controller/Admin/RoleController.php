@@ -28,7 +28,7 @@ class RoleController extends CrudController
     /**
      * @Route("/user_roles", methods={"GET"}, name="user_roles", options={"expose"=true})
      *
-     * @Permission(actions={Role::ADD, Role::EDIT})
+     * @Permission(actions={Permission::ADD, Permission::EDIT})
      */
     public function userRoles(Request $request, GroupRepository $groupRepository, RoleRepository $roleRepository)
     {
@@ -49,7 +49,7 @@ class RoleController extends CrudController
     /**
      * @Route("/save", methods={"POST"}, name="roles_save", options={"expose"=true})
      *
-     * @Permission(actions={Role::ADD, Role::EDIT})
+     * @Permission(actions={Permission::ADD, Permission::EDIT})
      */
     public function save(Request $request, RoleRepository $repository, RequestHandler $requestHandler)
     {

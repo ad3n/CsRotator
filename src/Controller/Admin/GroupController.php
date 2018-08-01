@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\Group;
-use App\Entity\Role;
 use App\Repository\GroupRepository;
 use App\Security\Permission\Permission;
 use KejawenLab\Bima\Controller\CrudController;
@@ -29,7 +28,7 @@ class GroupController extends CrudController
     /**
      * @Route("/", methods={"GET"}, name="groups_index", options={"expose"=true})
      *
-     * @Permission(actions=Role::VIEW)
+     * @Permission(actions=Permission::VIEW)
      */
     public function index(Request $request, Paginator $paginator)
     {
@@ -51,7 +50,7 @@ class GroupController extends CrudController
     /**
      * @Route("/{id}", methods={"GET"}, name="groups_detail", options={"expose"=true})
      *
-     * @Permission(actions=Role::VIEW)
+     * @Permission(actions=Permission::VIEW)
      */
     public function find(string $id, GroupRepository $repository, SerializerInterface $serializer)
     {
@@ -66,7 +65,7 @@ class GroupController extends CrudController
     /**
      * @Route("/save", methods={"POST"}, name="groups_save", options={"expose"=true})
      *
-     * @Permission(actions={Role::ADD, Role::EDIT})
+     * @Permission(actions={Permission::ADD, Permission::EDIT})
      */
     public function save(Request $request, GroupRepository $repository, RequestHandler $requestHandler)
     {
@@ -90,7 +89,7 @@ class GroupController extends CrudController
     /**
      * @Route("/{id}/delete", methods={"POST"}, name="groups_remove", options={"expose"=true})
      *
-     * @Permission(actions=Role::DELETE)
+     * @Permission(actions=Permission::DELETE)
      */
     public function delete(string $id, GroupRepository $repository)
     {

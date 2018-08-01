@@ -1,19 +1,23 @@
 {% spaceless %}
 
-{% set menu = code_to_menu('USER') %}
+{% set menu = code_to_menu('MENU') %}
 
 {% set startNumber = start_page_number() %}
 
-{% for key, data in users %}
+{% for key, data in menus %}
     <tr>
         <td>{{ (key + startNumber)  }}</td>
-        <td>{{ data.username }}</td>
-        <td>{{ data.group.name }}</td>
+        <td>{% if data.parent is not null %}{{ data.parent.name }}{% else %}-{% endif %}</td>
+        <td>{{ data.code }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.menuOrder }}</td>
+        <td>{{ data.iconClass }}</td>
+        <td>{{ data.routeName }}</td>
         <td>
             {% if is_granted('edit', menu) %}
                 <button data-primary="{{ data.id }}" class="btn btn-primary edit margin-r-5"><i class="fa fa-edit"></i></button>
             {% endif %}
-            {% if is_granted('delete', menu and 'admin' != data.username) %}
+            {% if is_granted('delete', menu) %}
                 <button data-primary="{{ data.id }}" class="btn btn-warning delete"><i class="fa fa-remove"></i></button>
             {% endif %}
         </td>

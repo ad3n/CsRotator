@@ -51,14 +51,14 @@ class PermissionVoter extends Voter
         }
 
         switch ($attribute) {
-            case Role::ADD:
-            case Role::EDIT:
+            case Permission::ADD:
+            case Permission::EDIT:
                 return $role->getAddable() || $role->getEditable();
                 break;
-            case Role::VIEW:
+            case Permission::VIEW:
                 return $role->getViewable();
                 break;
-            case Role::DELETE:
+            case Permission::DELETE:
                 return $role->getDeletable();
                 break;
         }

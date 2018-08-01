@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Menu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use PHLAK\Twine\Str;
 
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
@@ -20,11 +21,11 @@ class MenuRepository extends ServiceEntityRepository
 
     public function findAll()
     {
-        return $this->findBy(['deletedAt' => null], ['parent' => 'ASC']);
+        return $this->findBy([],['parent' => 'ASC']);
     }
 
     public function findByCode(string $code): ? Menu
     {
-        return $this->findOneBy(['code' => StringUtil::uppercase($code), 'deletedAt' => null]);
+        return $this->findOneBy(['code' => Str::make($code)->uppercase()]);
     }
 }

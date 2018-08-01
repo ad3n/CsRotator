@@ -6,6 +6,7 @@ namespace App\Menu;
 
 use App\Entity\Menu;
 use App\Entity\User;
+use App\Repository\MenuRepository;
 use App\Repository\RoleRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -16,13 +17,16 @@ class MenuLoader
 {
     private $roleRepository;
 
+    private $menuRepository;
+
     private $tokenStorage;
 
     private $childMenu;
 
-    public function __construct(RoleRepository $roleRepository, TokenStorageInterface $tokenStorage)
+    public function __construct(RoleRepository $roleRepository, MenuRepository $menuRepository, TokenStorageInterface $tokenStorage)
     {
         $this->roleRepository = $roleRepository;
+        $this->menuRepository = $menuRepository;
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -78,7 +82,7 @@ class MenuLoader
      */
     public function findMenu(string $code): ? Menu
     {
-        return $this->roleRepository->findOneBy(['code' => $code]);
+        return $this->menuRepository->findByCode($code);
     }
 
     private function findChildMenu(Menu $menu): array

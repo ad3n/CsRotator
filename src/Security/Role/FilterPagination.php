@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Security\Role;
 
-use App\Entity\Role;
 use App\Entity\User;
 use KejawenLab\Bima\BimaAdminEvents;
 use KejawenLab\Bima\Event\FilterPaginationEvent;
@@ -35,7 +34,7 @@ class FilterPagination implements EventSubscriberInterface
             return;
         }
 
-        if (Role::class !== $event->getEntityClass()) {
+        if (Permission::class !== $event->getEntityClass()) {
             return;
         }
 

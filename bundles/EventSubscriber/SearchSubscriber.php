@@ -36,8 +36,6 @@ class SearchSubscriber implements EventSubscriberInterface
                 }
             }
         }
-
-        $queryBuilder->andWhere($queryBuilder->expr()->isNull('o.deletedAt'));
     }
 
     public static function getSubscribedEvents()
