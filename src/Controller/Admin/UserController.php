@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Repository\ClientRepository;
 use App\Repository\GroupRepository;
 use App\Repository\UserRepository;
 use App\Security\Permission\Permission;
@@ -31,7 +32,7 @@ class UserController extends CrudController
      *
      * @Permission(actions=Permission::VIEW)
      */
-    public function index(Request $request, Paginator $paginator, GroupRepository $groupRepository)
+    public function index(Request $request, Paginator $paginator, GroupRepository $groupRepository, ClientRepository $clientRepository)
     {
         $users = $paginator->paginate(User::class, Paginator::PER_PAGE, (int) $request->query->get('page', 1));
 
@@ -45,7 +46,7 @@ class UserController extends CrudController
             ]);
         }
 
-        return $this->render('user/index.html.twig', ['title' => 'User', 'users' => $users, 'groups' => $groupRepository->findAll()]);
+        return $this->render('user/index.html.twig', ['title' => 'User', 'users' => $users, 'groups' => $groupRepository->findAll(), 'clients' => $clientRepository->findAll()]);
     }
 
     /**

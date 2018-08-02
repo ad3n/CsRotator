@@ -21,7 +21,7 @@ class MenuRepository extends ServiceEntityRepository
 
     public function findAll()
     {
-        return $this->findBy([],['parent' => 'ASC']);
+        return $this->findBy([], ['parent' => 'ASC']);
     }
 
     public function findByCode(string $code): ? Menu

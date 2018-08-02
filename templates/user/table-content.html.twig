@@ -9,6 +9,7 @@
         <td>{{ (key + startNumber)  }}</td>
         <td>{{ data.username }}</td>
         <td>{{ data.group.name }}</td>
+        <td>{{ data.client.name }}</td>
         <td>
             {% if is_granted('edit', menu) %}
                 <button data-primary="{{ data.id }}" class="btn btn-primary edit margin-r-5"><i class="fa fa-edit"></i></button>

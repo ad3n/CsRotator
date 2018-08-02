@@ -25,6 +25,7 @@ class UserFixture extends Fixture
     {
         $user = new User();
         $user->setGroup($this->getReference('group'));
+        $user->setClient($this->getReference('client'));
         $user->setUsername('admin');
         $user->setPassword($this->passwordEncoder->encodePassword($user, 'admin'));
 

@@ -16,7 +16,7 @@
                 <h3 class="box-title">Daftar Program</h3>
                 <div class="box-tools col-md-7 col-xs-7 col-sm-7 col-lg-7 pull-right">
                     <div class="input-group input-group-sm">
-                        {% if is_granted('add', code_to_menu('CAMPAIGN')) %}
+                        {% if is_granted('add', code_to_menu('CONTACT')) %}
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger form-modal-action"><i class="fa fa-plus-circle"></i></button>
                             </div>
@@ -37,13 +37,12 @@
                                 <th>Klien</th>
                             {% endif %}
                             <th>Nama</th>
-                            <th>Slug</th>
-                            <th>Facebook Pixel ID</th>
+                            <th>WhatsApp</th>
                             <th>Pilihan</th>
                         </tr>
                     </thead>
                     <tbody class="table-content">
-                        {% include 'campaign/table-content.html.twig' %}
+                        {% include 'contact/table-content.html.twig' %}
                     </tbody>
                 </table>
             </div>
@@ -52,7 +51,7 @@
                     <button type="button" class="btn btn-danger refresh"><i class="fa fa-refresh"></i></button>
                 </div>
                 <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 pull-right pagination-box">
-                    {{ knp_pagination_render(campaigns) }}
+                    {{ knp_pagination_render(contacts) }}
                 </div>
             </div>
         </div>
@@ -85,15 +84,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="username" class="col-sm-2 control-label">Facebook Pixel</label>
+                        <label for="username" class="col-sm-2 control-label">WhatsApp</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="facebookPixel" placeholder="Facebook Pixel">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="username" class="col-sm-2 control-label">Pesan</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="greetingMessage" placeholder="Pesan">
+                            <input type="text" class="form-control" id="whatsAppNumber" placeholder="WhatsApp">
                         </div>
                     </div>
                 </form>
@@ -131,16 +124,14 @@
             let id = $('#id').val();
             let name = $('#name').val();
             let client = $('#client').val();
-            let facebookPixel = $('#facebookPixel').val();
-            let greetingMessage = $('#greetingMessage').val();
+            let whatsAppNumber = $('#whatsAppNumber').val();
 
-            $.post(Routing.generate('campaigns_save'), {
+            $.post(Routing.generate('contacts_save'), {
                 _csrf_token: localStorage.getItem('csrf_token'),
                 id: id,
                 name: name,
                 client: client,
-                facebookPixel: facebookPixel,
-                greetingMessage: greetingMessage
+                whatsAppNumber: whatsAppNumber
             }, function (response) {
                 if ('OK' === response.status) {
                     localStorage.setItem('csrf_token', response._csrf_token);
@@ -148,14 +139,13 @@
                     $('#id').val('');
                     $('#name').val('');
                     $('#client').val('');
-                    $('#facebookPixel').val('');
-                    $('#greetingMessage').val('');
+                    $('#whatsAppNumber').val('');
 
                     $('#form-modal').modal('hide');
 
                     toastr['success']('Data berhasil disimpan.');
 
-                    refreshTable(Routing.generate('campaigns_index'), '{{ title }}');
+                    refreshTable(Routing.generate('contacts_index'), '{{ title }}');
                 } else {
                     localStorage.setItem('csrf_token', response._csrf_token);
 
@@ -178,13 +168,12 @@
 
             container.pemprovLoader();
 
-            $.get(Routing.generate('campaigns_detail', {id : id}), function (response) {
+            $.get(Routing.generate('contacts_detail', {id : id}), function (response) {
                 let data = JSON.parse(response);
                 $('#id').val(data.id);
                 $('#name').val(data.name);
                 $('#client').val(data.client.id);
-                $('#facebookPixel').val(data.facebookPixel);
-                $('#greetingMessage').val(data.greetingMessage);
+                $('#whatsAppNumber').val(data.whatsAppNumber);
 
                 $('.select2-static').trigger('change');
 
@@ -201,18 +190,18 @@
 
         $(document).on('click', '.notif-delete', function () {
             $('.delete-modal').modal('hide');
-            $.post(Routing.generate('campaigns_remove', {id: $('#primaryId').val()}), {_csrf_token: localStorage.getItem('csrf_token')}, function (response) {
+            $.post(Routing.generate('contacts_remove', {id: $('#primaryId').val()}), {_csrf_token: localStorage.getItem('csrf_token')}, function (response) {
 
                 toastr['success']('Data berhasil dihapus.');
 
-                refreshTable(Routing.generate('campaigns_index'), '{{ title }}');
+                refreshTable(Routing.generate('contacts_index'), '{{ title }}');
 
                 localStorage.setItem('csrf_token', response._csrf_token);
             });
         });
         
         $(document).on('click', '.search-action', function () {
-            refreshTable(Routing.generate('campaigns_index'), '{{ title }}', {q: $('.query-string').val()});
+            refreshTable(Routing.generate('contacts_index'), '{{ title }}', {q: $('.query-string').val()});
         });
 
         $(document).on('click', '.pagination-container a.btn-danger', function (e) {

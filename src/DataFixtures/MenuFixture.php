@@ -64,7 +64,7 @@ class MenuFixture extends Fixture
         $this->addReference('menu5', $menu5);
 
         $menu6 = new Menu();
-        $menu6->setParent($menu5);
+        $menu6->setParent($menu1);
         $menu6->setCode('KLIEN');
         $menu6->setName('Klien');
         $menu6->setMenuOrder(1);
@@ -82,6 +82,16 @@ class MenuFixture extends Fixture
 
         $manager->persist($menu7);
         $this->addReference('menu7', $menu7);
+
+        $menu8 = new Menu();
+        $menu8->setParent($menu5);
+        $menu8->setCode('CONTACT');
+        $menu8->setName('Kontak');
+        $menu8->setMenuOrder(3);
+        $menu8->setRouteName('contacts_index');
+
+        $manager->persist($menu8);
+        $this->addReference('menu8', $menu8);
 
         $manager->flush();
     }

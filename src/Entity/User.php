@@ -42,6 +42,16 @@ class User implements UserInterface, \Serializable
     private $group;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=false)
+     *
+     * @Assert\NotBlank()
+     *
+     * @Groups({"read"})
+     **/
+    private $client;
+
+    /**
      * @ORM\Column(type="string", length=12)
      *
      * @Assert\Length(max=17)
@@ -71,6 +81,16 @@ class User implements UserInterface, \Serializable
     public function setGroup(?Group $group): void
     {
         $this->group = $group;
+    }
+
+    public function getClient(): ? Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(Client $client): void
+    {
+        $this->client = $client;
     }
 
     public function getUsername(): string

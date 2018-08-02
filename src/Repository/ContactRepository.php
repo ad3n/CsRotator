@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
  */
-class ContacRepository extends ServiceEntityRepository
+class ContactRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

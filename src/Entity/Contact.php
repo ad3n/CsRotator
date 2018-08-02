@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="contacts", indexes={@ORM\Index(name="contact_search_idx", columns={"name", "whats_app_number"})})
- * @ORM\Entity(repositoryClass="App\Repository\ContacRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
  *
  * @UniqueEntity("name")
  *
