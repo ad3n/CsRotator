@@ -8,3 +8,27 @@ end_of_line = LF
 [*.php]
 indent_style = space
 indent_size = 4
+
+[*.yaml]
+indent_style = space
+indent_size = 4
+
+[*.yml]
+indent_style = space
+indent_size = 4
+
+[*.css]
+indent_style = space
+indent_size = 4
+
+[*.js]
+indent_style = space
+indent_size = 4
+
+[*.json]
+indent_style = space
+indent_size = 4
+
+[*.xml]
+indent_style = space
+indent_size = 4

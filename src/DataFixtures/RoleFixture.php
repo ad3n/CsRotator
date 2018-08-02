@@ -69,6 +69,15 @@ class RoleFixture extends Fixture
         $role6->setDeletable(true);
         $manager->persist($role6);
 
+        $role7 = new Role();
+        $role7->setGroup($this->getReference('group'));
+        $role7->setMenu($this->getReference('menu7'));
+        $role7->setAddable(true);
+        $role7->setEditable(true);
+        $role7->setViewable(true);
+        $role7->setDeletable(true);
+        $manager->persist($role7);
+
         $manager->flush();
     }
 }

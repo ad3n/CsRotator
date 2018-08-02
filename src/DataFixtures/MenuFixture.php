@@ -73,6 +73,16 @@ class MenuFixture extends Fixture
         $manager->persist($menu6);
         $this->addReference('menu6', $menu6);
 
+        $menu7 = new Menu();
+        $menu7->setParent($menu5);
+        $menu7->setCode('CAMPAIGN');
+        $menu7->setName('Program');
+        $menu7->setMenuOrder(2);
+        $menu7->setRouteName('campaigns_index');
+
+        $manager->persist($menu7);
+        $this->addReference('menu7', $menu7);
+
         $manager->flush();
     }
 }
