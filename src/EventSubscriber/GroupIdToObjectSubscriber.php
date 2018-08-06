@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
-use App\Entity\Campaign;
-use App\Entity\Contact;
 use App\Entity\User;
-use App\Repository\ClientRepository;
+use App\Repository\GroupRepository;
 use KejawenLab\Bima\BimaAdminEvents;
 use KejawenLab\Bima\Event\FilterRequestEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,36 +13,31 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
  */
-class ClientIdToObjectSubscriber implements EventSubscriberInterface
+class GroupIdToObjectSubscriber implements EventSubscriberInterface
 {
-    private $clientRepository;
+    private $groupRepository;
 
-    public function __construct(ClientRepository $clientRepository)
+    public function __construct(GroupRepository $groupRepository)
     {
-        $this->clientRepository = $clientRepository;
+        $this->groupRepository = $groupRepository;
     }
 
     public function filterRequest(FilterRequestEvent $event)
     {
         $request = $event->getRequest();
         $object = $event->getObject();
-        if (!($object instanceof Contact || $object instanceof Campaign || $object instanceof User)) {
+        if (!$object instanceof User) {
             return;
         }
 
-        $clientId = $request->request->get('client');
-        if (!$clientId) {
+        $groupId = $request->request->get('group');
+        if (!$groupId) {
             return;
         }
 
-        $client = $this->clientRepository->find($clientId);
-        if (!$client) {
-            return;
-        }
+        $object->setGroup($this->groupRepository->find($groupId));
 
-        $object->setClient($client);
-
-        $request->request->remove('client');
+        $request->request->remove('group');
     }
 
     public static function getSubscribedEvents()
