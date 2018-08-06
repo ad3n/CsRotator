@@ -7,6 +7,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use PHLAK\Twine\Str;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -24,6 +25,8 @@ class Campaign
      * @ORM\Column(type="uuid", unique=true)
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     *
+     * @Groups({"read"})
      */
     private $id;
 
@@ -32,6 +35,8 @@ class Campaign
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      *
      * @Assert\NotBlank()
+     *
+     * @Groups({"read"})
      **/
     private $client;
 
@@ -40,6 +45,8 @@ class Campaign
      *
      * @Assert\Length(max=77)
      * @Assert\NotBlank()
+     *
+     * @Groups({"read"})
      */
     private $name;
 
@@ -53,6 +60,8 @@ class Campaign
      *
      * @Assert\Length(max=27)
      * @Assert\NotBlank()
+     *
+     * @Groups({"read"})
      */
     private $facebookPixel;
 
@@ -60,6 +69,8 @@ class Campaign
      * @ORM\Column(type="string", nullable=true)
      *
      * @Assert\Length(max=255)
+     *
+     * @Groups({"read"})
      */
     private $greetingMessage;
 

@@ -37,16 +37,6 @@ class ContactController extends CrudController
     {
         $contacts = $paginator->paginate(Contact::class, Paginator::PER_PAGE, (int) $request->query->get('page', 1));
 
-        if ($request->isXmlHttpRequest()) {
-            $table = $this->renderView('contact/table-content.html.twig', ['contacts' => $contacts]);
-            $pagination = $this->renderView('contact/pagination.html.twig', ['contacts' => $contacts]);
-
-            return new JsonResponse([
-                'table' => $table,
-                'pagination' => $pagination,
-            ]);
-        }
-
         $clients = [];
         $admin = false;
 
@@ -55,6 +45,16 @@ class ContactController extends CrudController
         if ($user->getGroup()->getName() === Str::make('Super Administrator')->uppercase()->__toString()) {
             $clients = $clientRepository->findAll();
             $admin = true;
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            $table = $this->renderView('contact/table-content.html.twig', ['contacts' => $contacts, 'admin' => $admin]);
+            $pagination = $this->renderView('contact/pagination.html.twig', ['contacts' => $contacts]);
+
+            return new JsonResponse([
+                'table' => $table,
+                'pagination' => $pagination,
+            ]);
         }
 
         return $this->render('contact/index.html.twig', ['title' => 'Kontak', 'contacts' => $contacts, 'clients' => $clients, 'admin' => $admin]);

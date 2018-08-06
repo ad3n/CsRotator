@@ -83,7 +83,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title form-title">Hak Akses</h4>
+                <h4 class="modal-title">Hak Akses</h4>
             </div>
             <div class="modal-body">
                 <div class="input-group input-group-sm">
@@ -173,7 +173,7 @@
             let id = $(relatedTarget).data('primary');
             let container = $('.modal-content');
 
-            container.pemprovLoader();
+            container.whatsAppRandomLoader();
 
             $.get(Routing.generate('groups_detail', {id : id}), function (response) {
                 let data = JSON.parse(response);
@@ -183,7 +183,7 @@
 
                 $('.form-title').html('Edit Group');
 
-                container.trigger('destroy.pemprov.loader');
+                container.trigger('destroy.whatsAppRandom.loader');
             });
         });
 
@@ -199,12 +199,17 @@
 
             localStorage.setItem('groupId', id);
 
-            container.pemprovLoader();
-            $.get(Routing.generate('user_roles'), {groupId: id}, function (response) {
-                $('.roles-content').html(response['table']);
+            container.whatsAppRandomLoader();
 
-                container.trigger('destroy.pemprov.loader');
-            });
+            if ('undefined' !== typeof id) {
+                $.get(Routing.generate('user_roles'), {groupId: id}, function (response) {
+                    $('.roles-content').html(response['table']);
+
+                    container.trigger('destroy.whatsAppRandom.loader');
+                });
+            } else {
+                container.trigger('destroy.whatsAppRandom.loader');
+            }
         });
 
         $(document).on('click', '.menu-search-action', function () {
@@ -301,7 +306,7 @@
         function saveRole(options) {
             let container = $('.modal-content');
 
-            container.pemprovLoader();
+            container.whatsAppRandomLoader();
 
             $.post(Routing.generate('roles_save'), options, function (response) {
                 if ('OK' === response.status) {
@@ -311,10 +316,10 @@
                         $('.roles-content').html(response['table']);
 
                         toastr['success']('Hak akses berhasil diperbaharui.');
-                        container.trigger('destroy.pemprov.loader');
+                        container.trigger('destroy.whatsAppRandom.loader');
                     });
                 } else {
-                    container.trigger('destroy.pemprov.loader');
+                    container.trigger('destroy.whatsAppRandom.loader');
                 }
             });
         }

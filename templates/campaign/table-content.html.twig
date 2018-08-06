@@ -15,6 +15,7 @@
         <td>{{ data.facebookPixel }}</td>
         <td>
             {% if is_granted('edit', menu) %}
+                <button data-toggle="modal" data-target="#contact-modal" data-primary="{{ data.id }}" class="btn btn-success contact margin-r-5"><i class="fa fa-phone"></i></button>
                 <button data-toggle="modal" data-target="#form-modal" data-primary="{{ data.id }}" class="btn btn-primary edit margin-r-5"><i class="fa fa-edit"></i></button>
             {% endif %}
             {% if is_granted('delete', menu) %}

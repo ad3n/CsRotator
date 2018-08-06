@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\Campaign;
 use App\Entity\CampaignContact;
 use App\Entity\CampaignContactVisit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use PHLAK\Twine\Str;
 
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
@@ -33,6 +35,23 @@ class CampaignContacRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    public function findByCampaign(Campaign $campaign, string $queryString): array
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder->join('o.campaign', 'cmp');
+        $queryBuilder->join('o.contact', 'cnt');
+        $queryBuilder->orWhere($queryBuilder->expr()->like('cnt.name', $queryBuilder->expr()->literal(sprintf('%%%s%%', Str::make($queryString)->uppercase()))));
+        $queryBuilder->orWhere($queryBuilder->expr()->like('cnt.whatsAppNumber', $queryBuilder->expr()->literal(sprintf('%%%s%%', Str::make($queryString)))));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('cmp.id', $queryBuilder->expr()->literal($campaign->getId())));
+        $queryBuilder->addOrderBy('cnt.name', 'ASC');
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->useResultCache(true, 3, serialize($query->getParameters()));
+
+        return $this->filterContact($query->getResult());
+    }
+
     public function findByCampaignSlugAndWhatsAppNumber(string $slug, string $whatsAppNumber): ? CampaignContact
     {
         $queryBuilder = $this->createQueryBuilder('o');
@@ -47,7 +66,7 @@ class CampaignContacRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function visitCampaign(CampaignContact $campaignContact)
+    public function visitCampaign(CampaignContact $campaignContact): void
     {
         $campaignContact->count();
 
@@ -57,5 +76,16 @@ class CampaignContacRepository extends ServiceEntityRepository
         $this->_em->persist($campaignContact);
         $this->_em->persist($campaignVisit);
         $this->_em->flush();
+    }
+
+    private function filterContact(array $campaignContacts): array
+    {
+        $contacts = [];
+        /** @var CampaignContact $campaignContact */
+        foreach ($campaignContacts as $campaignContact) {
+            $contacts[] = $campaignContact->getContact();
+        }
+
+        return $contacts;
     }
 }

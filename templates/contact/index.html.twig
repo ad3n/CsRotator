@@ -166,21 +166,25 @@
             let id = $(relatedTarget).data('primary');
             let container = $('.modal-content');
 
-            container.pemprovLoader();
+            container.whatsAppRandomLoader();
 
-            $.get(Routing.generate('contacts_detail', {id : id}), function (response) {
-                let data = JSON.parse(response);
-                $('#id').val(data.id);
-                $('#name').val(data.name);
-                $('#client').val(data.client.id);
-                $('#whatsAppNumber').val(data.whatsAppNumber);
+            if ('undefined' !== typeof id) {
+                $.get(Routing.generate('contacts_detail', {id : id}), function (response) {
+                    let data = JSON.parse(response);
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#client').val(data.client.id);
+                    $('#whatsAppNumber').val(data.whatsAppNumber);
 
-                $('.select2-static').trigger('change');
+                    $('.select2-static').trigger('change');
 
-                $('.form-title').html('Edit Program');
+                    $('.form-title').html('Edit Program');
 
-                container.trigger('destroy.pemprov.loader');
-            });
+                    container.trigger('destroy.whatsAppRandom.loader');
+                });
+            } else {
+                container.trigger('destroy.whatsAppRandom.loader');
+            }
         });
 
         $(document).on('click', '.delete', function () {

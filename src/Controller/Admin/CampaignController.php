@@ -37,16 +37,6 @@ class CampaignController extends CrudController
     {
         $campaigns = $paginator->paginate(Campaign::class, Paginator::PER_PAGE, (int) $request->query->get('page', 1));
 
-        if ($request->isXmlHttpRequest()) {
-            $table = $this->renderView('campaign/table-content.html.twig', ['campaigns' => $campaigns]);
-            $pagination = $this->renderView('campaign/pagination.html.twig', ['campaigns' => $campaigns]);
-
-            return new JsonResponse([
-                'table' => $table,
-                'pagination' => $pagination,
-            ]);
-        }
-
         $clients = [];
         $admin = false;
 
@@ -55,6 +45,16 @@ class CampaignController extends CrudController
         if ($user->getGroup()->getName() === Str::make('Super Administrator')->uppercase()->__toString()) {
             $clients = $clientRepository->findAll();
             $admin = true;
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            $table = $this->renderView('campaign/table-content.html.twig', ['campaigns' => $campaigns, 'admin' => $admin]);
+            $pagination = $this->renderView('campaign/pagination.html.twig', ['campaigns' => $campaigns]);
+
+            return new JsonResponse([
+                'table' => $table,
+                'pagination' => $pagination,
+            ]);
         }
 
         return $this->render('campaign/index.html.twig', ['title' => 'Program', 'campaigns' => $campaigns, 'clients' => $clients, 'admin' => $admin]);

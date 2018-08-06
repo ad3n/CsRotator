@@ -108,6 +108,63 @@
 
 {% include 'default/notification_modal.html.twig' %}
 
+<div class="modal modal-default" id="contact-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Daftar Kontak</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group input-group-sm">
+                    {% if is_granted('add', code_to_menu('CAMPAIGN')) %}
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-danger add-contact"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                    {% endif %}
+                    <input type="text" name="role_search" class="form-control pull-right contact-search" placeholder="Cari Kontak">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-danger contact-search-action"><i class="fa fa-search-plus"></i></button>
+                    </div>
+                </div>
+                <div class="row table-responsive no-padding table-bordered table-hover table-striped">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>No. WhatsApp</th>
+                        </tr>
+                        <tbody class="contacts-content"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-default" id="add-contact-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Tambah Kontak</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 pull-left">
+                    <select class="add-contact-select-box"></select>
+                </div>
+                <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3 pull-right">
+                    <button type="button" class="btn btn-danger add-campaign-contact">Tambah</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
@@ -176,22 +233,26 @@
             let id = $(relatedTarget).data('primary');
             let container = $('.modal-content');
 
-            container.pemprovLoader();
+            container.whatsAppRandomLoader();
 
-            $.get(Routing.generate('campaigns_detail', {id : id}), function (response) {
-                let data = JSON.parse(response);
-                $('#id').val(data.id);
-                $('#name').val(data.name);
-                $('#client').val(data.client.id);
-                $('#facebookPixel').val(data.facebookPixel);
-                $('#greetingMessage').val(data.greetingMessage);
+            if ('undefined' !== typeof id) {
+                $.get(Routing.generate('campaigns_detail', {id : id}), function (response) {
+                    let data = JSON.parse(response);
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#client').val(data.client.id);
+                    $('#facebookPixel').val(data.facebookPixel);
+                    $('#greetingMessage').val(data.greetingMessage);
 
-                $('.select2-static').trigger('change');
+                    $('.select2-static').trigger('change');
 
-                $('.form-title').html('Edit Program');
+                    $('.form-title').html('Edit Program');
 
-                container.trigger('destroy.pemprov.loader');
-            });
+                    container.trigger('destroy.whatsAppRandom.loader');
+                });
+            } else {
+                container.trigger('destroy.whatsAppRandom.loader');
+            }
         });
 
         $(document).on('click', '.delete', function () {
@@ -220,6 +281,84 @@
             let url = jQuery(this).attr('href');
 
             refreshTable(url, '{{ title }}');
+        });
+
+        $(document).on('shown.bs.modal', '#contact-modal', function (e) {
+            let relatedTarget = e.relatedTarget;
+            let id = $(relatedTarget).data('primary');
+            let container = $('#contact-modal .modal-content');
+
+            localStorage.setItem('campaignId', id);
+
+            container.whatsAppRandomLoader();
+            $.get(Routing.generate('campaign_contacts', {campaignId: id}), function (response) {
+                $('.contacts-content').html(response['table']);
+
+                container.trigger('destroy.whatsAppRandom.loader');
+            });
+        });
+
+        $(document).on('click', '.contact-search-action', function () {
+            $.get(Routing.generate('campaign_contacts', {campaignId: localStorage.getItem('campaignId')}), {q: $('.contact-search').val()}, function (response) {
+                $('.contacts-content').html(response['table']);
+
+                $('.contact-modal').modal();
+            });
+        });
+
+        $(document).on('click', '.add-contact', function () {
+            let container = $('#add-contact-modal .modal-body');
+
+            container.whatsAppRandomLoader();
+            $.get(Routing.generate('campaign_unrelated_contacts', {campaignId: localStorage.getItem('campaignId')}), function (response) {
+                var options = '<option value="">---PILIH KONTAK---</option>';
+
+                $.each(JSON.parse(response), function (idx, val) {
+                    options += '<option value="' + val.id + '">' + val.name + ' - ' + val.whatsAppNumber + '</option>';
+                });
+
+                let selectBox = $('.add-contact-select-box');
+
+                selectBox.html(options);
+                selectBox.select2();
+
+                $('#add-contact-modal').modal();
+
+                container.trigger('destroy.whatsAppRandom.loader');
+            });
+        });
+        
+        $(document).on('click', '.add-campaign-contact', function () {
+            let contactId = $('.add-contact-select-box').val();
+
+            $.post(Routing.generate('campaign_contacts_save'), {
+                _csrf_token: localStorage.getItem('csrf_token'),
+                campaign: localStorage.getItem('campaignId'),
+                contact: contactId
+            }, function (response) {
+                if ('OK' === response.status) {
+                    localStorage.setItem('csrf_token', response._csrf_token);
+
+                    $('.add-contact-select-box').val('');
+
+                    $('#add-contact-modal').modal('hide');
+
+                    toastr['success']('Data berhasil disimpan.');
+
+                    $('.contact-search-action').click();
+                } else {
+                    localStorage.setItem('csrf_token', response._csrf_token);
+
+                    let listError = '<ul>';
+                    $.each(response.errors, function (key, value) {
+                        listError = listError + '<li><b> ' + value + '</b></li>';
+                    });
+                    listError = listError + '</ul>';
+
+                    $('.error-body').html(listError);
+                    $('.error-modal').modal();
+                }
+            });
         });
     });
 </script>

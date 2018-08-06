@@ -173,13 +173,13 @@
          **/
 
         (function ($) {
-            $.fn.pemprovLoader = function (opt) {
+            $.fn.whatsAppRandomLoader = function (opt) {
                 let $element = this;
 
                 let loader = new Loader($element, opt); //initialize loader
                 //initialize custom handler to the elements
                 let handler = {
-                    'destroy.pemprov.loader': $.proxy(function () {
+                    'destroy.whatsAppRandom.loader': $.proxy(function () {
                         let self = this;
                         loader.destroy();
                     }, this)

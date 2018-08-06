@@ -77,7 +77,7 @@ class MenuFixture extends Fixture
         $menu7->setParent($menu5);
         $menu7->setCode('CAMPAIGN');
         $menu7->setName('Program');
-        $menu7->setMenuOrder(2);
+        $menu7->setMenuOrder(3);
         $menu7->setRouteName('campaigns_index');
 
         $manager->persist($menu7);
@@ -87,7 +87,7 @@ class MenuFixture extends Fixture
         $menu8->setParent($menu5);
         $menu8->setCode('CONTACT');
         $menu8->setName('Kontak');
-        $menu8->setMenuOrder(3);
+        $menu8->setMenuOrder(2);
         $menu8->setRouteName('contacts_index');
 
         $manager->persist($menu8);

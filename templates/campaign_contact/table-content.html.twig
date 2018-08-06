@@ -1,21 +1,15 @@
 {% spaceless %}
 
-{% set menu = code_to_menu('CONTACT') %}
+{% set menu = code_to_menu('CAMPAIGN') %}
 
 {% set startNumber = start_page_number() %}
 
 {% for key, data in contacts %}
     <tr>
         <td>{{ (key + startNumber)  }}</td>
-        {% if admin %}
-            <td>{{ data.client.name }}</td>
-        {% endif %}
         <td>{{ data.name }}</td>
         <td>{{ data.whatsAppNumber }}</td>
         <td>
-            {% if is_granted('edit', menu) %}
-                <button data-toggle="modal" data-target="#form-modal" data-primary="{{ data.id }}" class="btn btn-primary edit margin-r-5"><i class="fa fa-edit"></i></button>
-            {% endif %}
             {% if is_granted('delete', menu) %}
                 <button data-primary="{{ data.id }}" class="btn btn-warning delete"><i class="fa fa-remove"></i></button>
             {% endif %}

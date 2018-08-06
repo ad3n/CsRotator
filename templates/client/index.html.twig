@@ -132,17 +132,21 @@
             let id = $(relatedTarget).data('primary');
             let container = $('.modal-content');
 
-            container.pemprovLoader();
+            container.whatsAppRandomLoader();
 
-            $.get(Routing.generate('clients_detail', {id : id}), function (response) {
-                let data = JSON.parse(response);
-                $('#id').val(data.id);
-                $('#name').val(data.name);
+            if ('undefined' !== typeof id) {
+                $.get(Routing.generate('clients_detail', {id : id}), function (response) {
+                    let data = JSON.parse(response);
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
 
-                $('.form-title').html('Edit Klien');
+                    $('.form-title').html('Edit Klien');
 
-                container.trigger('destroy.pemprov.loader');
-            });
+                    container.trigger('destroy.whatsAppRandom.loader');
+                });
+            } else {
+                container.trigger('destroy.whatsAppRandom.loader');
+            }
         });
 
         $(document).on('click', '.delete', function () {
