@@ -21,6 +21,20 @@ class CampaignContacRepository extends ServiceEntityRepository
         parent::__construct($registry, CampaignContact::class);
     }
 
+    public function findByCampaignAndContact(string $campaignId, string $contactId): ? CampaignContact
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder->join('o.campaign', 'c');
+        $queryBuilder->join('o.contact', 'ct');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('c.id', $queryBuilder->expr()->literal($campaignId)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('ct.id', $queryBuilder->expr()->literal($contactId)));
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+
+        return $query->getOneOrNullResult();
+    }
+
     public function findByCampaignSlug(string $slug): ? CampaignContact
     {
         $queryBuilder = $this->createQueryBuilder('o');

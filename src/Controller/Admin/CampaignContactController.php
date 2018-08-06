@@ -80,4 +80,20 @@ class CampaignContactController extends CrudController
 
         return new JsonResponse(['status' => 'OK']);
     }
+
+    /**
+     * @Route("/contacts/{contactId}/{campaignId}/delete", methods={"POST"}, name="campaign_contacts_remove", options={"expose"=true})
+     *
+     * @Permission(actions=Permission::DELETE)
+     */
+    public function delete(string $contactId, string $campaignId, CampaignContacRepository $repository)
+    {
+        if (!$campaignContacts = $repository->findByCampaignAndContact($campaignId, $contactId)) {
+            return new NotFoundHttpException();
+        }
+
+        $this->remove($campaignContacts);
+
+        return new JsonResponse(['status' => 'OK']);
+    }
 }

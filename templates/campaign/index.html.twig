@@ -360,6 +360,18 @@
                 }
             });
         });
+
+        $(document).on('click', '.delete-contact', function () {
+            let primary = $(this).data('primary');
+            $.post(Routing.generate('campaign_contacts_remove', {contactId: primary, campaignId: localStorage.getItem('campaignId')}), {_csrf_token: localStorage.getItem('csrf_token')}, function (response) {
+
+                toastr['success']('Data berhasil dihapus.');
+
+                $('.contact-search-action').click();
+
+                localStorage.setItem('csrf_token', response._csrf_token);
+            });
+        });
     });
 </script>
 {% endblock %}
