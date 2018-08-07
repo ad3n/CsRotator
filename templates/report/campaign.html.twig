@@ -1,0 +1,53 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}{% spaceless %}
+    <link rel="stylesheet" href="{{asset('lib/select2/css/select2.min.css')}}">
+{% endspaceless %}{% endblock %}
+
+{% block title %}{% spaceless %}{{ title }}{% endspaceless %}{% endblock %}
+
+{% block page_title %}{% spaceless %}{{ title }}{% endspaceless %}{% endblock %}
+
+{% block content %}{% spaceless %}
+<div class="row">
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Statistik Program Per Tanggal</h3>
+            </div>
+            <div class="box-body">
+                Line
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Statistik Program Kumulatif</h3>
+            </div>
+            <div class="box-body">
+                Pie
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Statistik Program Per Kontak</h3>
+            </div>
+            <div class="box-body">
+                Line
+            </div>
+        </div>
+    </div>
+</div>
+{% endspaceless %}{% endblock %}
+
+{% block javascripts %}{% spaceless %}
+<script src="{{ asset('js/chart.bundle.min.js') }}"></script>
+<script>
+    //todo
+</script>
+{% endspaceless %}{% endblock %}

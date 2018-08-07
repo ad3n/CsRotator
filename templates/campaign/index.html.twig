@@ -279,6 +279,11 @@
             $('.delete-modal').modal();
         });
 
+        $(document).on('click', '.report', function () {
+            let slug = $(this).data('primary');
+            window.location = Routing.generate('report_campaigns', {slug: slug});
+        });
+
         $(document).on('click', '.notif-delete', function () {
             $('.delete-modal').modal('hide');
             $.post(Routing.generate('campaigns_remove', {id: $('#primaryId').val()}), {_csrf_token: localStorage.getItem('csrf_token')}, function (response) {
