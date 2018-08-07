@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RedirectController extends Controller
 {
     /**
-     * @Route("/promosi/{slug}", name="lead")
+     * @Route("/promosi/{slug}", methods={"GET"}, name="lead")
      */
     public function lead(string $slug, CampaignContacRepository $campaignContacRepository)
     {
@@ -34,7 +34,7 @@ class RedirectController extends Controller
     }
 
     /**
-     * @Route("/kontak/{slug}/{whatsAppNumber}", name="contact")
+     * @Route("/kontak/{slug}/{whatsAppNumber}", methods={"GET"}, name="contact")
      */
     public function contact(string $slug, string $whatsAppNumber, CampaignContacRepository $campaignContacRepository)
     {

@@ -1,13 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block haed %}
-    {% spaceless %}
+{% block haed %}{% spaceless %}
         <link href="{{ asset('css/whatsapp.css') }}" rel="stylesheet">
-    {% endspaceless %}
-{% endblock %}
+{% endspaceless %}{% endblock %}
 
-{% block body %}
-    {% spaceless %}
+{% block body %}{% spaceless %}
         <div class="form-container" >
             <div style=" width : 100vw; height : 100vh; background : #075E54;" class="">
                 <div  style="padding : 1em; max-width : 850px;  max-height : 100vh; background : white; margin : auto;">
@@ -31,31 +28,28 @@
                 </div>
             </div>
         </div>
-    {% endspaceless %}
-{% endblock %}
+{% endspaceless %}{% endblock %}
 
-{% block javascripts %}
-    {% spaceless %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.1/clipboard.min.js"></script>
-        <!-- Facebook Pixel Code -->
-        <script>
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window, document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '{{ campaign.facebookPixel }}');
-            fbq('track', 'AddToCart');
-        </script>
-        <noscript><img height="1" width="1" style="display:none"
-                       src="https://www.facebook.com/tr?id={{ campaign.facebookPixel }}&ev=AddToCart&noscript=1"
-            /></noscript>
-        <!-- End Facebook Pixel Code -->
-        <script>
-            new Clipboard('.btn-copy');
-        </script>
-    {% endspaceless %}
-{% endblock %}
+{% block javascripts %}{% spaceless %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+<!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ campaign.facebookPixel }}');
+    fbq('track', 'AddToCart');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+               src="https://www.facebook.com/tr?id={{ campaign.facebookPixel }}&ev=AddToCart&noscript=1"
+    /></noscript>
+<!-- End Facebook Pixel Code -->
+<script>
+    new Clipboard('.btn-copy');
+</script>
+{% endspaceless %}{% endblock %}
