@@ -36,6 +36,7 @@
                             {% if admin %}
                                 <th>Klien</th>
                             {% endif %}
+                            <th>Tipe</th>
                             <th>Nama</th>
                             <th>URL</th>
                             <th>Facebook Pixel ID</th>
@@ -75,6 +76,17 @@
                                 {% for i, data in clients %}
                                     <option value="{{ data.id }}">{{ data.name }}</option>
                                 {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="col-sm-2 control-label">Klien</label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2-static" id="type">
+                                <option value="">---PILIH TIPE---</option>
+                                <option value="direct">DIRECT</option>
+                                <option value="chat">CHAT</option>
+                                <option value="form">FORM</option>
                             </select>
                         </div>
                     </div>
@@ -189,6 +201,7 @@
 
         $(document).on('click', '.save', function () {
             let id = $('#id').val();
+            let type = $('#type').val();
             let name = $('#name').val();
             let client = $('#client').val();
             let facebookPixel = $('#facebookPixel').val();
@@ -197,6 +210,7 @@
             $.post(Routing.generate('campaigns_save'), {
                 _csrf_token: localStorage.getItem('csrf_token'),
                 id: id,
+                type: type,
                 name: name,
                 client: client,
                 facebookPixel: facebookPixel,
@@ -206,6 +220,7 @@
                     localStorage.setItem('csrf_token', response._csrf_token);
 
                     $('#id').val('');
+                    $('#type').val('');
                     $('#name').val('');
                     $('#client').val('');
                     $('#facebookPixel').val('');
@@ -242,6 +257,7 @@
                 $.get(Routing.generate('campaigns_detail', {id : id}), function (response) {
                     let data = JSON.parse(response);
                     $('#id').val(data.id);
+                    $('#type').val(data.type);
                     $('#name').val(data.name);
                     $('#client').val(data.client.id);
                     $('#facebookPixel').val(data.facebookPixel);
