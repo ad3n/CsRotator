@@ -20,6 +20,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Campaign
 {
+    const DIRECT = 'direct';
+    const FORM = 'form';
+    const CHAT = 'chat';
+
     /**
      * @ORM\Id()
      * @ORM\Column(type="uuid", unique=true)
@@ -39,6 +43,16 @@ class Campaign
      * @Groups({"read"})
      **/
     private $client;
+
+    /**
+     * @ORM\Column(type="string", length=7)
+     *
+     * @Assert\Length(max=7)
+     * @Assert\NotBlank()
+     *
+     * @Groups({"read"})
+     */
+    private $type;
 
     /**
      * @ORM\Column(type="string", length=77)
@@ -74,6 +88,11 @@ class Campaign
      */
     private $greetingMessage;
 
+    public function __construct()
+    {
+        $this->type = self::CHAT;
+    }
+
     public function getId(): ? string
     {
         return (string) $this->id;
@@ -87,6 +106,18 @@ class Campaign
     public function setClient(Client $client): void
     {
         $this->client = $client;
+    }
+
+    public function getType(): ? string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): void
+    {
+        if (in_array($type, [self::CHAT, self::DIRECT, self::FORM])) {
+            $this->type = $type;
+        }
     }
 
     public function getName(): ? string

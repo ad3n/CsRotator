@@ -175,16 +175,20 @@
 
             container.whatsAppRandomLoader();
 
-            $.get(Routing.generate('groups_detail', {id : id}), function (response) {
-                let data = JSON.parse(response);
-                $('#id').val(data.id);
-                $('#code').val(data.code);
-                $('#name').val(data.name);
+            if ('undefined' !== typeof id) {
+                $.get(Routing.generate('groups_detail', {id: id}), function (response) {
+                    let data = JSON.parse(response);
+                    $('#id').val(data.id);
+                    $('#code').val(data.code);
+                    $('#name').val(data.name);
 
-                $('.form-title').html('Edit Group');
+                    $('.form-title').html('Edit Group');
 
+                    container.trigger('destroy.whatsAppRandom.loader');
+                });
+            } else {
                 container.trigger('destroy.whatsAppRandom.loader');
-            });
+            }
         });
 
         $(document).on('click', '.delete', function () {

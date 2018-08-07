@@ -35,11 +35,12 @@ class CampaignContacRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function findByCampaignSlug(string $slug): ? CampaignContact
+    public function findByCampaignSlug(string $slug, string $type = Campaign::CHAT): ? CampaignContact
     {
         $queryBuilder = $this->createQueryBuilder('o');
         $queryBuilder->join('o.campaign', 'c');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('c.slug', $queryBuilder->expr()->literal($slug)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('c.type', $queryBuilder->expr()->literal($type)));
         $queryBuilder->addOrderBy('o.count', 'ASC');
         $queryBuilder->setMaxResults(1);
 
@@ -49,12 +50,13 @@ class CampaignContacRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function findByCampaign(Campaign $campaign, string $queryString): array
+    public function findByCampaign(Campaign $campaign, string $queryString, string $type = Campaign::CHAT): array
     {
         $queryBuilder = $this->createQueryBuilder('o');
         $queryBuilder->join('o.campaign', 'cmp');
         $queryBuilder->join('o.contact', 'cnt');
         $queryBuilder->orWhere($queryBuilder->expr()->like('cnt.name', $queryBuilder->expr()->literal(sprintf('%%%s%%', Str::make($queryString)->uppercase()))));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('cmp.type', $queryBuilder->expr()->literal($type)));
         $queryBuilder->orWhere($queryBuilder->expr()->like('cnt.whatsAppNumber', $queryBuilder->expr()->literal(sprintf('%%%s%%', Str::make($queryString)))));
         $queryBuilder->andWhere($queryBuilder->expr()->eq('cmp.id', $queryBuilder->expr()->literal($campaign->getId())));
         $queryBuilder->addOrderBy('cnt.name', 'ASC');
@@ -66,12 +68,13 @@ class CampaignContacRepository extends ServiceEntityRepository
         return $this->filterContact($query->getResult());
     }
 
-    public function findByCampaignSlugAndWhatsAppNumber(string $slug, string $whatsAppNumber): ? CampaignContact
+    public function findByCampaignSlugAndWhatsAppNumber(string $slug, string $whatsAppNumber, string $type = Campaign::CHAT): ? CampaignContact
     {
         $queryBuilder = $this->createQueryBuilder('o');
         $queryBuilder->join('o.campaign', 'c');
         $queryBuilder->join('o.contact', 'ct');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('c.slug', $queryBuilder->expr()->literal($slug)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('c.type', $queryBuilder->expr()->literal($type)));
         $queryBuilder->andWhere($queryBuilder->expr()->eq('ct.whatsAppNumber', $queryBuilder->expr()->literal($whatsAppNumber)));
 
         $query = $queryBuilder->getQuery();

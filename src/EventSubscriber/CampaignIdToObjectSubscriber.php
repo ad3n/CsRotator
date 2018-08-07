@@ -36,6 +36,9 @@ class CampaignIdToObjectSubscriber implements EventSubscriberInterface
 
         $campaignId = $request->request->get('campaign');
         $contactId = $request->request->get('contact');
+        $request->request->remove('campaign');
+        $request->request->remove('contact');
+
         if (!($campaignId && $contactId)) {
             return;
         }
@@ -45,9 +48,6 @@ class CampaignIdToObjectSubscriber implements EventSubscriberInterface
         if ($campaign) {
             $campaignContact->setCampaign($campaign);
             $campaignContact->setContact($contact);
-
-            $request->request->remove('campaign');
-            $request->request->remove('contact');
         }
     }
 

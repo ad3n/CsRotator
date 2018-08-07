@@ -37,7 +37,7 @@
                                 <th>Klien</th>
                             {% endif %}
                             <th>Nama</th>
-                            <th>Slug</th>
+                            <th>URL</th>
                             <th>Facebook Pixel ID</th>
                             <th>Pilihan</th>
                         </tr>
@@ -171,9 +171,12 @@
 <script src="{{ asset('lib/select2/js/select2.min.js') }}"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 <script>
     $(window).ready(function () {
         localStorage.setItem('csrf_token', '{{ csrf_token('BIMA_CSRF_TOKEN') }}');
+
+        new ClipboardJS('.copas');
 
         $('.select2-static').select2();
 

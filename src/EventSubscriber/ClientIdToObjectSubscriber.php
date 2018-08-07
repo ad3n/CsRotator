@@ -33,6 +33,8 @@ class ClientIdToObjectSubscriber implements EventSubscriberInterface
         }
 
         $clientId = $request->request->get('client');
+        $request->request->remove('client');
+
         if (!$clientId) {
             return;
         }
@@ -43,8 +45,6 @@ class ClientIdToObjectSubscriber implements EventSubscriberInterface
         }
 
         $object->setClient($client);
-
-        $request->request->remove('client');
     }
 
     public static function getSubscribedEvents()

@@ -4,5 +4,6 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         version: '1.0'
+        domain: 'https://cs.clorismen.com'
         title: 'CUSTOMER SERVICES ROTATOR'
         title_long: 'CUSTOMER SERVICES ROTATOR'

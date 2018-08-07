@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
-use App\Entity\User;
-use App\Repository\GroupRepository;
+use App\Entity\Menu;
+use App\Repository\MenuRepository;
 use KejawenLab\Bima\BimaAdminEvents;
 use KejawenLab\Bima\Event\FilterRequestEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -13,31 +13,31 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
  */
-class GroupIdToObjectSubscriber implements EventSubscriberInterface
+class ParentIdToMenuSubscriber implements EventSubscriberInterface
 {
-    private $groupRepository;
+    private $menuRepository;
 
-    public function __construct(GroupRepository $groupRepository)
+    public function __construct(MenuRepository $menuRepository)
     {
-        $this->groupRepository = $groupRepository;
+        $this->menuRepository = $menuRepository;
     }
 
     public function filterRequest(FilterRequestEvent $event)
     {
         $request = $event->getRequest();
         $object = $event->getObject();
-        if (!$object instanceof User) {
+        if (!$object instanceof Menu) {
             return;
         }
 
-        $groupId = $request->request->get('group');
-        if (!$groupId) {
+        $parentId = $request->request->get('parent');
+        $request->request->remove('parent');
+
+        if (!$parentId) {
             return;
         }
 
-        $object->setGroup($this->groupRepository->find($groupId));
-
-        $request->request->remove('group');
+        $object->setParent($this->menuRepository->find($parentId));
     }
 
     public static function getSubscribedEvents()

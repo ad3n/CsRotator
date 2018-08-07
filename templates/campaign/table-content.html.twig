@@ -5,13 +5,15 @@
 {% set startNumber = start_page_number() %}
 
 {% for key, data in campaigns %}
+    {% set campaignUrl = campaign_to_url(data) %}
     <tr>
         <td>{{ (key + startNumber)  }}</td>
         {% if admin %}
             <td>{{ data.client.name }}</td>
         {% endif %}
+        <td>{{ data.type | upper }}</td>
         <td>{{ data.name }}</td>
-        <td>{{ data.slug }}</td>
+        <td>{% if 'DIRECT' == campaignUrl %}{{ campaignUrl }}{% else %}{{ domain ~ campaignUrl }}<button class="btn btn-default pull-right copas" data-clipboard-text="{{ domain ~ campaignUrl }}"><i class="fa fa-copy"></i></button>{% endif %}</td>
         <td>{{ data.facebookPixel }}</td>
         <td>
             {% if is_granted('edit', menu) %}
