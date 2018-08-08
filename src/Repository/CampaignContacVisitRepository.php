@@ -40,6 +40,22 @@ class CampaignContacVisitRepository extends ServiceEntityRepository
             GROUP BY DATE(visit_time);
         ", $slug, $startDate->format('Y-m-d'), $endDate->format('Y-m-d')), $rsm);
 
-        return $query->getResult();
+        $results = $query->getResult();
+
+        $interval = \DateInterval::createFromDateString('1 day');
+        $period = new \DatePeriod($startDate, $interval, $endDate);
+
+        $output = [];
+        foreach ($period as $date) {
+            $output[$date->format('Y-m-d')] = 0;
+        }
+
+        foreach ($results as $result) {
+            if (array_key_exists($result['tanggal'], $output)) {
+                $output[$result['tanggal']] = $result['kunjungan'];
+            }
+        }
+
+        return $output;
     }
 }

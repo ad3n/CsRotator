@@ -17,4 +17,9 @@ class CampaignRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Campaign::class);
     }
+
+    public function findBySlug(string $slug): ? Campaign
+    {
+        return $this->findOneBy(['slug' => $slug]);
+    }
 }

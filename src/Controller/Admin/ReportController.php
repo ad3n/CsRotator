@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Repository\CampaignContacVisitRepository;
+use App\Repository\CampaignRepository;
 use App\Security\Permission\Permission;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,13 +25,14 @@ class ReportController extends Controller
      *
      * @Permission(actions=Permission::VIEW)
      */
-    public function index(string $slug, Request $request, CampaignContacVisitRepository $repository)
+    public function index(string $slug, Request $request, CampaignRepository $campaignRepository, CampaignContacVisitRepository $campaignContacVisitRepository)
     {
         $startDate = \DateTime::createFromFormat('Y-m-d', $request->query->get('startDate', date('Y-m-01')));
         $endDate = \DateTime::createFromFormat('Y-m-d', $request->query->get('endDate', date('Y-m-t')));
 
-        $statistic = $repository->getStatistic($slug, $startDate, $endDate);
+        $campaign = $campaignRepository->findBySlug($slug);
+        $statistic = $campaignContacVisitRepository->getStatistic($slug, $startDate, $endDate);
 
-        return $this->render('report/campaign.html.twig', ['title' => 'Laporan Program/Campaign', 'data' => $statistic]);
+        return $this->render('report/campaign.html.twig', ['title' => sprintf('Laporan Program/Campaign %s', $campaign->getName()), 'data' => $statistic]);
     }
 }

@@ -13,32 +13,20 @@
     <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Statistik Program Per Tanggal</h3>
+                <h3 class="box-title">Statistik Per Tanggal</h3>
             </div>
             <div class="box-body">
-                Line
+                <canvas id="per_tanggal" height="150"></canvas>
             </div>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Statistik Program Kumulatif</h3>
+                <h3 class="box-title">Kumulatif</h3>
             </div>
             <div class="box-body">
-                Pie
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Statistik Program Per Kontak</h3>
-            </div>
-            <div class="box-body">
-                Line
+                <canvas id="kumulatif" height="313"></canvas>
             </div>
         </div>
     </div>
@@ -48,6 +36,56 @@
 {% block javascripts %}{% spaceless %}
 <script src="{{ asset('js/chart.bundle.min.js') }}"></script>
 <script>
-    //todo
+    let labels = [];
+    let data = [];
+    let total = 0;
+
+    {% for key, value in data %}
+        labels.push('{{ key }}');
+        data.push({{ value }});
+        total += {{ value }};
+    {% endfor %}
+
+    console.log(total);
+
+    new Chart(document.getElementById('per_tanggal').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Kunjungan',
+                data: data,
+                backgroundColor: '#32cc9c',
+                borderColor: 'grey',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+
+    new Chart(document.getElementById('kumulatif').getContext('2d'),{
+        type: 'pie',
+        data: {
+            labels: ['Kunjuangan'],
+            datasets: [{
+                label: 'Kunjungan',
+                data: [total],
+                backgroundColor: '#5e6df8',
+                borderColor: 'grey',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
 </script>
 {% endspaceless %}{% endblock %}
