@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Security\Role;
 
 use App\Entity\User;
+use App\Security\Permission\Permission;
 use KejawenLab\Bima\BimaAdminEvents;
 use KejawenLab\Bima\Event\FilterPaginationEvent;
 use PHLAK\Twine\Str;
