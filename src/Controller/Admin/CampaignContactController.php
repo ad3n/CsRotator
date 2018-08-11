@@ -64,7 +64,7 @@ class CampaignContactController extends CrudController
     }
 
     /**
-     * @Route("/save", methods={"POST"}, name="campaign_contacts_save", options={"expose"=true})
+     * @Route("/contacts/save", methods={"POST"}, name="campaign_contacts_save", options={"expose"=true})
      *
      * @Permission(actions={Permission::ADD, Permission::EDIT})
      */
