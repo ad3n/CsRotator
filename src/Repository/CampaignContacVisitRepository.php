@@ -19,7 +19,7 @@ class CampaignContacVisitRepository extends ServiceEntityRepository
         parent::__construct($registry, CampaignContactVisit::class);
     }
 
-    public function getStatistic(string $slug, \DateTime $startDate, \DateTime $endDate)
+    public function getStatistic(string $slug, \DateTime $startDate, \DateTime $endDate): array
     {
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('tanggal', 'tanggal');
@@ -57,5 +57,26 @@ class CampaignContacVisitRepository extends ServiceEntityRepository
         }
 
         return $output;
+    }
+
+    public function getContactStatistic(string $slug, \DateTime $startDate, \DateTime $endDate): array
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('nama', 'nama');
+        $rsm->addScalarResult('kunjungan', 'kunjungan');
+
+        $query = $this->_em->createNativeQuery(sprintf("
+        SELECT
+            c2.name AS nama,
+            COUNT(1) AS kunjungan
+        FROM campaign_contact_visits ccv
+            JOIN campaign_contacts cc ON ccv.campaign_contact_id = cc.id
+            JOIN campaigns c ON cc.campaign_id = c.id
+            JOIN contacts c2 on cc.contact_id = c2.id
+        WHERE c.slug = '%s' AND DATE(ccv.visit_time) >= '%s' AND DATE(ccv.visit_time) <= '%s'
+        GROUP BY c2.name;
+        ", $slug, $startDate->format('Y-m-d'), $endDate->format('Y-m-d')), $rsm);
+
+        return $query->getResult();
     }
 }

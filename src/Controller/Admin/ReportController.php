@@ -32,7 +32,12 @@ class ReportController extends Controller
 
         $campaign = $campaignRepository->findBySlug($slug);
         $statistic = $campaignContacVisitRepository->getStatistic($slug, $startDate, $endDate);
+        $contactStatistic = $campaignContacVisitRepository->getContactStatistic($slug, $startDate, $endDate);
 
-        return $this->render('report/campaign.html.twig', ['title' => sprintf('Laporan Program/Campaign %s', $campaign->getName()), 'data' => $statistic]);
+        return $this->render('report/campaign.html.twig', [
+            'title' => sprintf('Laporan Program/Campaign %s', $campaign->getName()),
+            'data' => $statistic,
+            'contact' => $contactStatistic,
+        ]);
     }
 }

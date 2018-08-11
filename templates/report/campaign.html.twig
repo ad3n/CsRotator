@@ -10,13 +10,25 @@
 
 {% block content %}{% spaceless %}
 <div class="row">
-    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Statistik Per Tanggal</h3>
             </div>
             <div class="box-body">
                 <canvas id="per_tanggal" height="150"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Statistik Per Kontak</h3>
+            </div>
+            <div class="box-body">
+                <canvas id="per_kontak" height="150"></canvas>
             </div>
         </div>
     </div>
@@ -40,13 +52,19 @@
     let data = [];
     let total = 0;
 
+    let contactLabels = [];
+    let contactData = [];
+
     {% for key, value in data %}
         labels.push('{{ key }}');
         data.push({{ value }});
         total += {{ value }};
     {% endfor %}
 
-    console.log(total);
+    {% for key, value in contact %}
+        contactLabels.push('{{ value['nama'] }}');
+        contactData.push({{ value['kunjungan'] }});
+    {% endfor %}
 
     new Chart(document.getElementById('per_tanggal').getContext('2d'), {
         type: 'line',
@@ -56,6 +74,29 @@
                 label: 'Kunjungan',
                 data: data,
                 backgroundColor: '#32cc9c',
+                borderColor: 'grey',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+
+    new Chart(document.getElementById('per_kontak').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: contactLabels,
+            datasets: [{
+                label: 'Pelanggan',
+                data: contactData,
+                backgroundColor: '#cc5816',
                 borderColor: 'grey',
                 borderWidth: 1
             }]
