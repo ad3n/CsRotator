@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Entity\Campaign;
-use App\Repository\CampaignContacTRepository;
+use App\Repository\CampaignContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,7 +19,7 @@ class RedirectController extends Controller
     /**
      * @Route("/promosi/{slug}", methods={"GET"}, name="lead")
      */
-    public function lead(string $slug, CampaignContacTRepository $campaignContacRepository)
+    public function lead(string $slug, CampaignContactRepository $campaignContacRepository)
     {
         $campaignContact = $campaignContacRepository->findByCampaignSlug($slug, Campaign::FORM);
         if (!$campaignContact) {
@@ -36,7 +36,7 @@ class RedirectController extends Controller
     /**
      * @Route("/kontak/{slug}/{whatsAppNumber}", methods={"GET"}, name="contact")
      */
-    public function contact(string $slug, string $whatsAppNumber, CampaignContacTRepository $campaignContacRepository)
+    public function contact(string $slug, string $whatsAppNumber, CampaignContactRepository $campaignContacRepository)
     {
         $campaignContact = $campaignContacRepository->findByCampaignSlugAndWhatsAppNumber($slug, $whatsAppNumber, Campaign::FORM);
         if (!$campaignContact) {
@@ -54,7 +54,7 @@ class RedirectController extends Controller
     /**
      * @Route("/chat/{slug}", name="chat")
      */
-    public function chat(string $slug, CampaignContacTRepository $campaignContacRepository)
+    public function chat(string $slug, CampaignContactRepository $campaignContacRepository)
     {
         $campaignContact = $campaignContacRepository->findByCampaignSlug($slug, Campaign::CHAT);
         if (!$campaignContact) {
@@ -72,7 +72,7 @@ class RedirectController extends Controller
     /**
      * @Route("/teruskan/{slug}/{whatsAppNumber}/{message}", name="direct")
      */
-    public function direct(string $slug, string $whatsAppNumber, string $message, CampaignContacTRepository $campaignContacRepository)
+    public function direct(string $slug, string $whatsAppNumber, string $message, CampaignContactRepository $campaignContacRepository)
     {
         $campaignContact = $campaignContacRepository->findByCampaignSlug($slug, Campaign::DIRECT);
         if (!$campaignContact) {
