@@ -6,7 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Campaign;
 use App\Entity\CampaignContact;
-use App\Repository\CampaignContacRepository;
+use App\Repository\CampaignContacTRepository;
 use App\Repository\CampaignRepository;
 use App\Repository\ContactRepository;
 use App\Security\Permission\Permission;
@@ -32,7 +32,7 @@ class CampaignContactController extends CrudController
      *
      * @Permission(actions={Permission::ADD, Permission::EDIT})
      */
-    public function index(string $campaignId, Request $request, CampaignRepository $campaignRepository, CampaignContacRepository $campaignContacRepository)
+    public function index(string $campaignId, Request $request, CampaignRepository $campaignRepository, CampaignContacTRepository $campaignContacRepository)
     {
         $campaign = $campaignRepository->find($campaignId);
         if (!$campaign instanceof Campaign) {
@@ -86,7 +86,7 @@ class CampaignContactController extends CrudController
      *
      * @Permission(actions=Permission::DELETE)
      */
-    public function delete(string $contactId, string $campaignId, CampaignContacRepository $repository)
+    public function delete(string $contactId, string $campaignId, CampaignContacTRepository $repository)
     {
         if (!$campaignContacts = $repository->findByCampaignAndContact($campaignId, $contactId)) {
             return new NotFoundHttpException();

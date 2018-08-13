@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Repository\CampaignContacVisitRepository;
+use App\Repository\CampaignContactVisitRepository;
 use App\Repository\CampaignRepository;
 use App\Security\Permission\Permission;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,7 +25,7 @@ class ReportController extends Controller
      *
      * @Permission(actions=Permission::VIEW)
      */
-    public function index(string $slug, Request $request, CampaignRepository $campaignRepository, CampaignContacVisitRepository $campaignContacVisitRepository)
+    public function index(string $slug, Request $request, CampaignRepository $campaignRepository, CampaignContactVisitRepository $campaignContacVisitRepository)
     {
         $startDate = \DateTime::createFromFormat('Y-m-d', $request->query->get('startDate', date('Y-m-01')));
         $endDate = \DateTime::createFromFormat('Y-m-d', $request->query->get('endDate', date('Y-m-t')));

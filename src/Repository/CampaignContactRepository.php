@@ -7,18 +7,30 @@ namespace App\Repository;
 use App\Entity\Campaign;
 use App\Entity\CampaignContact;
 use App\Entity\CampaignContactVisit;
+use App\Entity\Contact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\ResultSetMapping;
 use PHLAK\Twine\Str;
 
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
  */
-class CampaignContacRepository extends ServiceEntityRepository
+class CampaignContactRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CampaignContact::class);
+    }
+
+    public function countService(Contact $contact): ? int
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('total', 'total');
+
+        $query = $this->_em->createNativeQuery(sprintf("SELECT SUM(count) AS total FROM campaign_contacts WHERE contact_id = '%s';", $contact->getId()), $rsm);
+
+        return (int) $query->getSingleScalarResult();
     }
 
     public function findByCampaignAndContact(string $campaignId, string $contactId): ? CampaignContact

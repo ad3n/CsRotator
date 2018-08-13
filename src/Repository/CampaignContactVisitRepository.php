@@ -12,7 +12,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
  */
-class CampaignContacVisitRepository extends ServiceEntityRepository
+class CampaignContactVisitRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
