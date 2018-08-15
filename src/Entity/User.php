@@ -134,13 +134,14 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->group
+            $this->group,
+            $this->client
         ]);
     }
 
     public function unserialize($serialized)
     {
-        list($this->id, $this->username, $this->password, $this->group) = unserialize($serialized);
+        list($this->id, $this->username, $this->password, $this->group, $this->client) = unserialize($serialized);
     }
 
     public function getSalt(): ? string
