@@ -230,6 +230,8 @@
 
                     $('#form-modal').modal('hide');
 
+                    $('.select2-static').trigger('change');
+
                     toastr['success']('Data berhasil disimpan.');
 
                     refreshTable(Routing.generate('campaigns_index'), '{{ title }}');
@@ -368,6 +370,8 @@
                     $('.add-contact-select-box').val('');
 
                     $('#add-contact-modal').modal('hide');
+
+                    $('.select2-static').trigger('change');
 
                     toastr['success']('Data berhasil disimpan.');
 

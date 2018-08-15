@@ -175,6 +175,8 @@
 
                     $('#form-modal').modal('hide');
 
+                    $('.select2-static').trigger('change');
+
                     toastr['success']('Data berhasil disimpan.');
 
                     refreshTable(Routing.generate('menus_index'), '{{ title }}');

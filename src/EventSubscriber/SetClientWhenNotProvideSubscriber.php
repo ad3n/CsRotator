@@ -36,7 +36,7 @@ class SetClientWhenNotProvideSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($user->getGroup()->getName() !== Str::make('Super Administrator')->uppercase()->__toString()) {
+        if ($user->getGroup()->getName() === Str::make('Super Administrator')->uppercase()->__toString()) {
             return;
         }
 
