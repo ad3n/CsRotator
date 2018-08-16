@@ -70,7 +70,7 @@ class RedirectController extends Controller
     }
 
     /**
-     * @Route("/teruskan/{slug}/{whatsAppNumber}/{message}", name="direct")
+     * @Route("/teruskan/{slug}/{message}", name="direct")
      */
     public function direct(string $slug, string $whatsAppNumber, string $message, CampaignContactRepository $campaignContacRepository)
     {
@@ -81,6 +81,6 @@ class RedirectController extends Controller
 
         $campaignContacRepository->visitCampaign($campaignContact);
 
-        return new RedirectResponse(sprintf('https://api.whatsapp.com/send?phone=%s&text=%s', $whatsAppNumber, $message));
+        return new RedirectResponse(sprintf('https://api.whatsapp.com/send?phone=%s&text=%s', $campaignContact->getContact()->getWhatsAppNumber(), $message));
     }
 }
