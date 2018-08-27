@@ -79,15 +79,31 @@
             }]
         },
         options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        let value = data.datasets[0].data[tooltipItem.index];
+                        value = value.toString();
+                        value = value.split(/(?=(?:...)*$)/);
+                        value = value.join(',');
+
+                        return value;
+                    }
+                }
+            },
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero:true,
+                        userCallback: function(value) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+
+                            return value;
+                        }
                     }
                 }]
-            },
-            scaleLabel: function(label) {
-                return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             }
         }
     });
@@ -105,15 +121,31 @@
             }]
         },
         options: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        let value = data.datasets[0].data[tooltipItem.index];
+                        value = value.toString();
+                        value = value.split(/(?=(?:...)*$)/);
+                        value = value.join(',');
+
+                        return value;
+                    }
+                }
+            },
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero:true,
+                        userCallback: function(value) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+
+                            return value;
+                        }
                     }
                 }]
-            },
-            scaleLabel: function(label) {
-                return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             }
         }
     });
@@ -131,10 +163,32 @@
             }]
         },
         options: {
-            responsive: true,
-            scaleLabel: function(label) {
-                return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            }
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        let value = data.datasets[0].data[tooltipItem.index];
+                        value = value.toString();
+                        value = value.split(/(?=(?:...)*$)/);
+                        value = value.join(',');
+                        
+                        return value;
+                    }
+                }
+            },
+            scales: {
+                yAxes:[{
+                    ticks: {
+                        userCallback: function(value) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+
+                            return value;
+                        }
+                    }
+                }]
+            },
+            responsive: true
         }
     });
 </script>
