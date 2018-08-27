@@ -85,6 +85,9 @@
                         beginAtZero:true
                     }
                 }]
+            },
+            scaleLabel: function(label) {
+                return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             }
         }
     });
@@ -108,6 +111,9 @@
                         beginAtZero:true
                     }
                 }]
+            },
+            scaleLabel: function(label) {
+                return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             }
         }
     });
@@ -125,7 +131,10 @@
             }]
         },
         options: {
-            responsive: true
+            responsive: true,
+            scaleLabel: function(label) {
+                return label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
         }
     });
 </script>
