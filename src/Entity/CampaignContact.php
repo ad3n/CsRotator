@@ -40,6 +40,11 @@ class CampaignContact
     private $contact;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isActive;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $count;
@@ -47,6 +52,7 @@ class CampaignContact
     public function __construct()
     {
         $this->count = 0;
+        $this->isActive = true;
     }
 
     public function getId(): ? string
@@ -72,6 +78,16 @@ class CampaignContact
     public function setContact(Contact $contact): void
     {
         $this->contact = $contact;
+    }
+
+    public function isActive(): bool
+    {
+        return (bool) $this->isActive;
+    }
+
+    public function setIsActive(bool $active)
+    {
+        $this->isActive = $active;
     }
 
     public function getCount(): ? int

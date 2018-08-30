@@ -150,6 +150,8 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>No. WhatsApp</th>
+                            <th>Status</th>
+                            <th>Pilihan</th>
                         </tr>
                         <tbody class="contacts-content"></tbody>
                     </table>
@@ -402,6 +404,30 @@
                 localStorage.setItem('csrf_token', response._csrf_token);
             });
         });
+
+        $(document).on('click', '.activate-contact', function () {
+            let contactId = $(this).data('primary');
+
+            changeStatus(contactId, 'true');
+        });
+
+        $(document).on('click', '.inactivate-contact', function () {
+            let contactId = $(this).data('primary');
+
+            changeStatus(contactId, 'false');
+        });
     });
+    
+    function changeStatus(contactId, status) {
+        $.post(Routing.generate('campaign_contacts_change_status', {
+            contactId: contactId,
+            campaignId: localStorage.getItem('campaignId'),
+            status: status
+        }), {_csrf_token: localStorage.getItem('csrf_token')}, function (response) {
+            $('.contact-search-action').click();
+
+            localStorage.setItem('csrf_token', response._csrf_token);
+        });
+    };
 </script>
 {% endspaceless %}{% endblock %}

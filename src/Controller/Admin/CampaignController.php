@@ -72,7 +72,7 @@ class CampaignController extends CrudController
             throw new NotFoundHttpException();
         }
 
-        return new JsonResponse($serializer->serialize($campaign, 'json', ['campaigns' => ['read']]));
+        return new JsonResponse($serializer->serialize($campaign, 'json', ['groups' => ['read']]));
     }
 
     /**

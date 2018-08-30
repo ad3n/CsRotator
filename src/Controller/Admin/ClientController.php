@@ -59,7 +59,7 @@ class ClientController extends CrudController
             throw new NotFoundHttpException();
         }
 
-        return new JsonResponse($serializer->serialize($client, 'json', ['clients' => ['read']]));
+        return new JsonResponse($serializer->serialize($client, 'json', ['groups' => ['read']]));
     }
 
     /**

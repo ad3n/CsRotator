@@ -61,7 +61,7 @@ class MenuController extends CrudController
             throw new NotFoundHttpException();
         }
 
-        return new JsonResponse($serializer->serialize($menu, 'json', ['menus' => ['read']]));
+        return new JsonResponse($serializer->serialize($menu, 'json', ['groups' => ['read']]));
     }
 
     /**

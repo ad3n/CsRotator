@@ -9,7 +9,15 @@
         <td>{{ (key + startNumber)  }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.whatsAppNumber }}</td>
+        <td>{%  if data.status %}{{ 'Aktif' }}{% else %}{{ 'Tidak Aktif' }}{% endif %}</td>
         <td>
+            {% if is_granted('edit', menu) %}
+                {%  if data.status %}
+                    <button data-primary="{{ data.id }}" class="btn btn-danger inactivate-contact margin-r-5"><i class="fa fa-minus"></i></button>
+                {% else %}
+                    <button data-primary="{{ data.id }}" class="btn btn-success activate-contact margin-r-5"><i class="fa fa-recycle"></i></button>
+                {% endif %}
+            {% endif %}
             {% if is_granted('delete', menu) %}
                 <button data-primary="{{ data.id }}" class="btn btn-warning delete-contact"><i class="fa fa-remove"></i></button>
             {% endif %}

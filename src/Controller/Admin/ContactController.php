@@ -72,7 +72,7 @@ class ContactController extends CrudController
             throw new NotFoundHttpException();
         }
 
-        return new JsonResponse($serializer->serialize($contact, 'json', ['contacts' => ['read']]));
+        return new JsonResponse($serializer->serialize($contact, 'json', ['groups' => ['read']]));
     }
 
     /**

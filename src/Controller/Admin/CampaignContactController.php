@@ -60,7 +60,7 @@ class CampaignContactController extends CrudController
             throw new NotFoundHttpException();
         }
 
-        return new JsonResponse($serializer->serialize($contactRepository->findUnrelatedContact($campaign), 'json', ['contacts' => ['read']]));
+        return new JsonResponse($serializer->serialize($contactRepository->findUnrelatedContact($campaign), 'json', ['groups' => ['read']]));
     }
 
     /**
@@ -93,6 +93,24 @@ class CampaignContactController extends CrudController
         }
 
         $this->remove($campaignContacts);
+
+        return new JsonResponse(['status' => 'OK']);
+    }
+
+    /**
+     * @Route("/contacts/{contactId}/{campaignId}/change/{status}", methods={"POST"}, name="campaign_contacts_change_status", options={"expose"=true})
+     *
+     * @Permission(actions=Permission::EDIT)
+     */
+    public function changeStatus(string $contactId, string $campaignId, string $status, CampaignContactRepository $repository)
+    {
+        if (!$campaignContacts = $repository->findByCampaignAndContact($campaignId, $contactId)) {
+            return new NotFoundHttpException();
+        }
+
+        $campaignContacts->setIsActive('true' === $status ? true : false);
+
+        $this->commit($campaignContacts);
 
         return new JsonResponse(['status' => 'OK']);
     }

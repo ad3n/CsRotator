@@ -53,6 +53,7 @@ class CampaignContactRepository extends ServiceEntityRepository
         $queryBuilder->join('o.campaign', 'c');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('c.slug', $queryBuilder->expr()->literal($slug)));
         $queryBuilder->andWhere($queryBuilder->expr()->eq('c.type', $queryBuilder->expr()->literal($type)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.isActive', $queryBuilder->expr()->literal(true)));
         $queryBuilder->addOrderBy('o.count', 'ASC');
         $queryBuilder->setMaxResults(1);
 
@@ -88,6 +89,7 @@ class CampaignContactRepository extends ServiceEntityRepository
         $queryBuilder->andWhere($queryBuilder->expr()->eq('c.slug', $queryBuilder->expr()->literal($slug)));
         $queryBuilder->andWhere($queryBuilder->expr()->eq('c.type', $queryBuilder->expr()->literal($type)));
         $queryBuilder->andWhere($queryBuilder->expr()->eq('ct.whatsAppNumber', $queryBuilder->expr()->literal($whatsAppNumber)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.isActive', $queryBuilder->expr()->literal(true)));
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
@@ -112,7 +114,14 @@ class CampaignContactRepository extends ServiceEntityRepository
         $contacts = [];
         /** @var CampaignContact $campaignContact */
         foreach ($campaignContacts as $campaignContact) {
-            $contacts[] = $campaignContact->getContact();
+            $contact = $campaignContact->getContact();
+
+            $contacts[] = [
+                'id' => $contact->getId(),
+                'name' => $contact->getName(),
+                'whatsAppNumber' => $contact->getWhatsAppNumber(),
+                'status' => $campaignContact->isActive(),
+            ];
         }
 
         return $contacts;
