@@ -85,7 +85,7 @@ class CampaignContact
         return (bool) $this->isActive;
     }
 
-    public function setIsActive(bool $active)
+    public function setIsActive(bool $active): void
     {
         $this->isActive = $active;
     }
@@ -95,7 +95,7 @@ class CampaignContact
         return $this->count;
     }
 
-    public function count()
+    public function count(): void
     {
         $this->count++;
     }

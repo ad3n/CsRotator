@@ -1281,16 +1281,16 @@
         },
         {
             "name": "knplabs/knp-components",
-            "version": "v1.3.9",
+            "version": "v1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/knp-components.git",
-                "reference": "f0f830361ff0ee83ea5c5ffe49b429d2b0ff4266"
+                "reference": "fc1755ba2b77f83a3d3c99e21f3026ba2a1429be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/f0f830361ff0ee83ea5c5ffe49b429d2b0ff4266",
-                "reference": "f0f830361ff0ee83ea5c5ffe49b429d2b0ff4266",
+                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/fc1755ba2b77f83a3d3c99e21f3026ba2a1429be",
+                "reference": "fc1755ba2b77f83a3d3c99e21f3026ba2a1429be",
                 "shasum": ""
             },
             "require": {
@@ -1343,7 +1343,7 @@
                 "pager",
                 "paginator"
             ],
-            "time": "2018-08-03T08:37:27+00:00"
+            "time": "2018-09-11T07:54:48+00:00"
         },
         {
             "name": "knplabs/knp-paginator-bundle",
@@ -2649,16 +2649,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "d6f5fed47ddad2eb25d5cc19316692203a2898eb"
+                "reference": "9fb60f232af0764d58002e7872acb43a74506d25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/d6f5fed47ddad2eb25d5cc19316692203a2898eb",
-                "reference": "d6f5fed47ddad2eb25d5cc19316692203a2898eb",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/9fb60f232af0764d58002e7872acb43a74506d25",
+                "reference": "9fb60f232af0764d58002e7872acb43a74506d25",
                 "shasum": ""
             },
             "require": {
@@ -2692,7 +2692,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2018-08-21T07:51:18+00:00"
+            "time": "2018-09-03T08:17:12+00:00"
         },
         {
             "name": "symfony/framework-bundle",
@@ -3089,7 +3089,8 @@
             ],
             "description": "Enforces Long Term Supported versions of Symfony components",
             "homepage": "https://symfony.com",
-            "time": "2018-04-03T05:04:16+00:00"
+            "abandoned": "symfony/flex",
+            "time": "2018-09-13T17:13:03+00:00"
         },
         {
             "name": "symfony/monolog-bridge",

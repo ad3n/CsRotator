@@ -109,6 +109,14 @@ class CampaignContactRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
+    public function resetServiceCount()
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+        $queryBuilder->update(CampaignContact::class, 'o');
+        $queryBuilder->set('o.count', 0);
+        $queryBuilder->getQuery()->execute();
+    }
+
     private function filterContact(array $campaignContacts): array
     {
         $contacts = [];
