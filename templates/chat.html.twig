@@ -36,8 +36,8 @@
         /></noscript>
     <!-- End Facebook Pixel Code -->
     <script>
-        let target = 'https://api.whatsapp.com/send?phone={{ contact.whatsAppNumber }}&text={{ campaign.greetingMessage }}';
-        let countdownNumber = 4;
+        var target = 'https://api.whatsapp.com/send?phone={{ contact.whatsAppNumber }}&text={{ campaign.greetingMessage }}';
+        var countdownNumber = 4;
         (function wait() {
             countdownNumber--;
             document.getElementById('countdown').innerHTML = countdownNumber.toString();
