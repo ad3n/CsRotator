@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Entity\Campaign;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -36,6 +37,10 @@ class CampaignToUrlExtension extends \Twig_Extension
             return $this->urlGenerator->generate('lead', ['slug' => $campaign->getSlug()]);
         }
 
-        return 'DIRECT';
+        if (Campaign::DIRECT === $campaign->getType()) {
+            return $this->urlGenerator->generate('direct', ['slug' => $campaign->getSlug()]);
+        }
+
+        throw new NotFoundHttpException();
     }
 }

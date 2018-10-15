@@ -70,9 +70,9 @@ class RedirectController extends Controller
     }
 
     /**
-     * @Route("/teruskan/{slug}/{message}", name="direct")
+     * @Route("/hubungi-cs/{slug}", name="direct")
      */
-    public function direct(string $slug, string $whatsAppNumber, string $message, CampaignContactRepository $campaignContacRepository)
+    public function direct(string $slug, CampaignContactRepository $campaignContacRepository)
     {
         $campaignContact = $campaignContacRepository->findByCampaignSlug($slug, Campaign::DIRECT);
         if (!$campaignContact) {
@@ -81,6 +81,6 @@ class RedirectController extends Controller
 
         $campaignContacRepository->visitCampaign($campaignContact);
 
-        return new RedirectResponse(sprintf('https://api.whatsapp.com/send?phone=%s&text=%s', $campaignContact->getContact()->getWhatsAppNumber(), $message));
+        return new RedirectResponse(sprintf('https://api.whatsapp.com/send?phone=%s&text=%s', $campaignContact->getContact()->getWhatsAppNumber(), $campaignContact->getCampaign()->getGreetingMessage()));
     }
 }
